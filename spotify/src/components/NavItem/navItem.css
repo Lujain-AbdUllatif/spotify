@@ -1,0 +1,39 @@
+.navItem-container {
+  display: flex;
+  width: 210px;
+  height: 55px;
+  left: 25px;
+  top: 120px;
+  background: rgba(29, 185, 84, 0.15);
+  border-radius: 10px;
+}
+
+.navItem-div {
+  width: 40%;
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navItem-icon {
+  width: 20.18px;
+  height: 21.6px;
+  left: 55px;
+  top: 136px;
+}
+
+.navItem-title {
+  width: 49px;
+  height: 21px;
+  left: 98px;
+  top: 138px;
+
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #191414;
+}
