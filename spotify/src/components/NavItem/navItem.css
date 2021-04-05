@@ -4,15 +4,17 @@
   height: 55px;
   left: 25px;
   top: 120px;
-  background: rgba(29, 185, 84, 0.15);
   border-radius: 10px;
+  /* border: black solid 3px; */
 }
 
+.navItem-container-active {
+  background: rgba(29, 185, 84, 0.15);
+}
 .navItem-div {
-  width: 40%;
+  width: 100%;
   margin-left: 40px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -24,16 +26,15 @@
 }
 
 .navItem-title {
-  width: 49px;
   height: 21px;
   left: 98px;
   top: 138px;
-
+  margin-left: 22px;
+  /* FONT */
   font-family: Rubik;
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
   line-height: 21px;
-
   color: #191414;
 }
