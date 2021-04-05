@@ -1,0 +1,15 @@
+.navBar-container {
+  position: fixed;
+  padding-left: 25px;
+  padding-right: 35px;
+  padding-top: 35px;
+  width: 270px;
+  height: 100vh;
+  background-color: #ffffff;
+  font-size: larger;
+}
+
+.navbar-logo {
+  margin-left: 25px;
+  margin-bottom: 10px;
+}

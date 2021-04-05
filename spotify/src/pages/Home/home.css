@@ -1,0 +1,9 @@
+.home-container {
+  height: 100vh;
+  background-color: rgba(29, 185, 84, 0.15);
+}
+
+.home-div {
+  margin-left: 270px;
+  padding: 50px;
+}
