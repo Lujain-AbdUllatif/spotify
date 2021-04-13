@@ -1,9 +1,35 @@
 .home-container {
-  height: 100vh;
   background-color: rgba(29, 185, 84, 0.15);
+  min-height: 100vh;
 }
 
 .home-div {
   margin-left: 270px;
   padding: 50px;
+}
+
+.home-dataList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Scroll Bar */
+
+/* Track */
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 50px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border: 3.5px solid #f1f1f1;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:active:hover {
+  background-color: grey;
 }

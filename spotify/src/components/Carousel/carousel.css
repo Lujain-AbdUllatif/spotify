@@ -1,0 +1,54 @@
+.carousel-div {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 935px;
+}
+
+@media screen and (min-width: 1920px) {
+  .carousel-div {
+    width: 1265px;
+  }
+}
+
+.carousel-title-arrow {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.carousel-playlists {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.carousel-1st,
+.carousel-2nd {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* border: 3px solid black; */
+}
+
+.carousel-disappear {
+  display: none;
+}
+
+.carousel-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.carousel-grey-btn {
+  background-color: silver;
+}
+
+.carousel-title {
+  font-size: 30px;
+  font-weight: bold;
+}
