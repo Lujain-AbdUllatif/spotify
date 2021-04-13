@@ -10,11 +10,26 @@ import likedSongsIcon from "../../assets/liked_songs_icon.png";
 // Hooks
 import { useHistory } from "react-router-dom";
 
-export default function NavBar({ homeState, browseState, likedSongsState }) {
+export default function NavBar({ active }) {
+  // Active State from the buttons
+  let homeState = false;
+  let browseState = false;
+  let likedSongsState = false;
+
+  if (active === "home") {
+    homeState = true;
+  }
+  if (active === "browse") {
+    browseState = true;
+  }
+  if (active === "likedSongs") {
+    likedSongsState = true;
+  }
+
+  // Navigation - History
   let history = useHistory();
 
   let handleHomeClick = () => {
-    console.log("CLICKED!!!!!!");
     history.push("/");
   };
   let handleBrowseClick = () => {
@@ -29,26 +44,32 @@ export default function NavBar({ homeState, browseState, likedSongsState }) {
       {/* LOGO */}
       <img src={logo} className="navbar-logo"></img>
       {/* HOME */}
-      <NavItem
-        iconSrc={homeIcon}
-        title="Home"
-        activeState={homeState}
-        onClickFunction={handleHomeClick}
-      ></NavItem>
+      <button className="navbar-btn">
+        <NavItem
+          iconSrc={homeIcon}
+          title="Home"
+          activeState={homeState}
+          onClickFunction={handleHomeClick}
+        ></NavItem>
+      </button>
       {/* BROWSE */}
-      <NavItem
-        iconSrc={browseIcon}
-        title="Browse"
-        activeState={browseState}
-        onClickFunction={handleBrowseClick}
-      ></NavItem>
+      <button className="navbar-btn">
+        <NavItem
+          iconSrc={browseIcon}
+          title="Browse"
+          activeState={browseState}
+          onClickFunction={handleBrowseClick}
+        ></NavItem>
+      </button>
       {/* LIKED SONGS */}
-      <NavItem
-        iconSrc={likedSongsIcon}
-        title="Liked Songs"
-        activeState={likedSongsState}
-        onClickFunction={handleLikedSongsClick}
-      ></NavItem>
+      <button className="navbar-btn">
+        <NavItem
+          iconSrc={likedSongsIcon}
+          title="Liked Songs"
+          activeState={likedSongsState}
+          onClickFunction={handleLikedSongsClick}
+        ></NavItem>
+      </button>
     </div>
   );
 }

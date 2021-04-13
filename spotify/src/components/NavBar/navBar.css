@@ -13,3 +13,13 @@
   margin-left: 25px;
   margin-bottom: 10px;
 }
+
+.navbar-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.navbar-btn:active {
+  /* border: 3px solid red; */
+  border: none;
+}
