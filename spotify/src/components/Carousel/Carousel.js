@@ -70,14 +70,14 @@ export default function Carousel({ title, data }) {
             onClick={handleLeftClick}
             disabled={!disBtn}
           >
-            <img src={arrowLeft} />
+            <i class="fas fa-chevron-left"></i>
           </button>
           <button
             className={`carousel-btn ${greyBtn ? "carousel-grey-btn" : ""}`}
             onClick={handleRightClick}
             disabled={disBtn}
           >
-            <img src={arrowRight} />
+            <i class="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>
