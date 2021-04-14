@@ -5,9 +5,9 @@ import { recentlyPlayed, featuredPlaylists, mood } from "../../API/homeAPI";
 
 // Components
 import NavBar from "../../components/NavBar/NavBar";
-import PlayList from "../../components/PlayList/PlayList";
 import Carousel from "../../components/Carousel/Carousel";
 
+// CSS
 import "./home.css";
 
 export default function Home() {
