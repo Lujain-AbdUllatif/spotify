@@ -1,0 +1,48 @@
+/* TABLE */
+.playlist-table-head,
+.playlist-table-body {
+  padding: 10px;
+  text-align: left;
+}
+
+.playlist-table {
+  margin-left: 115px;
+  margin-right: 220px;
+  border-collapse: collapse;
+}
+
+@media screen and (min-width: 1920px) {
+  .playlist-table {
+    width: 1315px;
+  }
+}
+
+.playlist-table-head {
+  border-bottom: 1px solid #646464;
+  min-width: 150px;
+  font-weight: 100;
+}
+
+.playlist-table-body {
+  border-bottom: 0.5px solid #646464;
+  font-weight: 600;
+}
+
+.playlist-table-body-disappear {
+  display: none;
+}
+
+/* ROW AND PLAY */
+.playlist-table-body-row {
+  color: #191414 !important;
+}
+
+.playlist-table-body-row:hover {
+  background-color: rgba(29, 185, 84, 0.2);
+}
+
+/* NOT FOUND */
+.playlist-table-not-found {
+  margin-left: 150px;
+  font-size: 18px;
+}

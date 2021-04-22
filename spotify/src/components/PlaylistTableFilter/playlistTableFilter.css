@@ -1,0 +1,23 @@
+.playlist-table-filter-bar {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  margin-left: 115px;
+}
+
+.playlist-table-filter {
+  background-color: transparent;
+  border: none;
+}
+
+.playlist-table-filter::placeholder {
+  color: #646464;
+}
+
+.playlist-table-filter:focus {
+  outline: none;
+}
+
+.playlist-table-filter-icon {
+  color: #646464;
+  margin-right: 15px;
+}

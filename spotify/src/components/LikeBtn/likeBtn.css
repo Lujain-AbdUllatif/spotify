@@ -1,0 +1,9 @@
+.like-btn {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.like-btn img {
+  width: 20px;
+}

@@ -2,16 +2,26 @@ import React from "react";
 
 import "./playlistHeader.css";
 
-export default function PlaylistHeader(props) {
+export default function PlaylistHeader({ data, duration, tracksNum }) {
+  const { name, description, image_url } = data;
+
   return (
-    <div className="playlist-header-container">
+    <div
+      className="playlist-header-container"
+      style={{
+        background: `url(${image_url})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="playlist-page-title-description">
-        <h3>Saturday Morning Can't Be Better</h3>
-        <p>Start off your saturday with great tunes</p>
+        <h3>{name}</h3>
+        <p>{description}</p>
       </div>
       <div className="playlist-page-length-duration">
-        <h3>50 songs</h3>
-        <p>2 hr 30 min</p>
+        <h3>{tracksNum} songs</h3>
+        <p>{duration}</p>
       </div>
     </div>
   );

@@ -16,10 +16,7 @@ export default function Home() {
   let [moodData, setMoodData] = React.useState();
 
   useEffect(() => {
-    recentlyPlayed().then((data) => {
-      setRecentlyPlayedData(data);
-      console.log(featuredPlaylistsData);
-    });
+    recentlyPlayed().then((data) => setRecentlyPlayedData(data));
     featuredPlaylists().then((data) => setFeaturedPlaylistsData(data));
     mood().then((data) => setMoodData(data));
   }, []);
