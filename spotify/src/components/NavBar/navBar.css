@@ -15,11 +15,7 @@
 }
 
 .navbar-btn {
+  outline: none;
   border: none;
   background-color: transparent;
-}
-
-.navbar-btn:active {
-  /* border: 3px solid red; */
-  border: none;
 }

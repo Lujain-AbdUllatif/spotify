@@ -3,31 +3,8 @@ import React from "react";
 // Components
 import PlayList from "../PlayList/PlayList";
 
-import arrowRight from "../../assets/controller_icons/next.svg";
-import arrowLeft from "../../assets/controller_icons/prev.svg";
-
-// Icons >>>>> REACT ICONS
-// import { MdKeyboardArrowRight } from "react-icons/Md";
-// import { MdKeyboardArrowLeft } from "react-icons/Md";
-
-// function RightArrow() {
-//   return (
-//     <IconContext.Provider>
-//       <MdKeyboardArrowRight />
-//     </IconContext.Provider>
-//   );
-// }
-
-// function LeftArrow() {
-//   return (
-//     <IconContext.Provider>
-//       <MdKeyboardArrowLeft />
-//     </IconContext.Provider>
-//   );
-// }
-
+// CSS
 import "./carousel.css";
-import { IconContext } from "react-icons/lib";
 
 export default function Carousel({ title, data }) {
   // States

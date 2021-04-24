@@ -5,9 +5,9 @@ import { recentlyPlayed, featuredPlaylists, mood } from "../../API/homeAPI";
 
 // Components
 import NavBar from "../../components/NavBar/NavBar";
-import PlayList from "../../components/PlayList/PlayList";
 import Carousel from "../../components/Carousel/Carousel";
 
+// CSS
 import "./home.css";
 
 export default function Home() {
@@ -16,10 +16,7 @@ export default function Home() {
   let [moodData, setMoodData] = React.useState();
 
   useEffect(() => {
-    recentlyPlayed().then((data) => {
-      setRecentlyPlayedData(data);
-      console.log(featuredPlaylistsData);
-    });
+    recentlyPlayed().then((data) => setRecentlyPlayedData(data));
     featuredPlaylists().then((data) => setFeaturedPlaylistsData(data));
     mood().then((data) => setMoodData(data));
   }, []);
