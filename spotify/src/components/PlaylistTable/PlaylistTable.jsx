@@ -4,16 +4,21 @@ import { useTable } from "react-table";
 // Component
 import LikeBtn from "../LikeBtn/LikeBtn";
 
+// ICONS
+import playIcon from "../../assets/play_line_icon.png";
+
 // CSS
 import "./PlaylistTable.css";
 
 // Columns
 const COLUMNS = [
+  { Header: "PLAY-BTN" },
   { Header: "", accessor: "is_liked" },
   { Header: "TITLE", accessor: "name" },
   { Header: "ARTIST", accessor: "artists_names" },
   { Header: "ALBUM", accessor: "album_name" },
   { Header: "RELEASE DATE", accessor: "release_date" },
+  { Header: "PLAY-BTN-RIGHT" },
 ];
 
 export default function PlaylistTable({ tracks, txtValue }) {
@@ -86,6 +91,14 @@ export default function PlaylistTable({ tracks, txtValue }) {
           return (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => {
+                if (column.Header == "PLAY-BTN") {
+                  return <th className="playlist-table-play-btn-header"></th>;
+                }
+                if (column.Header == "PLAY-BTN-RIGHT") {
+                  return (
+                    <th className="playlist-table-play-btn-header-right"></th>
+                  );
+                }
                 return (
                   <th
                     {...column.getHeaderProps()}
@@ -116,6 +129,22 @@ export default function PlaylistTable({ tracks, txtValue }) {
                   );
                 }
 
+                if (cell.column.Header == "PLAY-BTN") {
+                  return (
+                    <td className="playlist-table-play-btn-data">
+                      <button className="playlist-table-play-btn">
+                        <img src={playIcon} />
+                      </button>
+                    </td>
+                  );
+                }
+
+                if (cell.column.Header == "PLAY-BTN-RIGHT") {
+                  console.log("yesss");
+                  return (
+                    <td className="playlist-table-play-btn-data-right"> </td>
+                  );
+                }
                 return (
                   <td {...cell.getCellProps()} className={tdClassName(cell)}>
                     {cell.render("Cell")}

@@ -39,10 +39,47 @@
 
 .playlist-table-body-row:hover {
   background-color: rgba(29, 185, 84, 0.2);
+  border-radius: 1000px;
 }
 
 /* NOT FOUND */
 .playlist-table-not-found {
   margin-left: 150px;
   font-size: 18px;
+}
+
+/* PLAY BTN */
+.playlist-table-play-btn-header {
+  width: 65px;
+}
+
+.playlist-table-play-btn-header-right {
+  width: 20px;
+}
+
+.playlist-table-play-btn-data {
+  border-radius: 10px 0px 0px 10px;
+  visibility: hidden;
+  border-bottom: 0px;
+}
+
+.playlist-table-body-row:hover > .playlist-table-play-btn-data {
+  visibility: visible;
+}
+
+.playlist-table-play-btn-data-right {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.playlist-table-play-btn {
+  margin-left: 23px;
+  margin-top: 5px;
+  outline: transparent;
+  background: transparent;
+  border: none;
+}
+
+.playlist-table-play-btn img {
+  width: 25px;
+  margin: auto;
 }
