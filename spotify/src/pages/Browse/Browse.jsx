@@ -2,7 +2,6 @@ import React from "react";
 
 // Components
 import NavBar from "../../components/NavBar/NavBar";
-import PlaylistHeader from "../../components/PlaylistHeader/PlaylistHeader";
 
 import "./browse.css";
 

@@ -42,7 +42,7 @@ export default function NavBar({ active }) {
   return (
     <div className="navBar-container">
       {/* LOGO */}
-      <img src={logo} className="navbar-logo"></img>
+      <img src={logo} className="navbar-logo" alt="LOGO"></img>
       {/* HOME */}
       <button className="navbar-btn">
         <NavItem

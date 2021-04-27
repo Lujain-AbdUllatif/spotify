@@ -15,7 +15,7 @@ export default function PlayList({ data }) {
 
   return (
     <div className="playlist-div" onClick={handleClick}>
-      <img className="playlist-img" src={image_url} />
+      <img className="playlist-img" src={image_url} alt="playlist img" />
       <p className="playlist-name">{name}</p>
       <p className="playlist-description">{description}</p>
     </div>

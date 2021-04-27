@@ -1,6 +1,7 @@
 import React from "react";
+
+// CSS
 import "./navItem.css";
-import homeIcon from "../../assets/home_icon.png";
 
 export default function NavItem({
   iconSrc,
@@ -14,7 +15,7 @@ export default function NavItem({
   return (
     <div className={classNames} onClick={onClickFunction}>
       <div className="navItem-div">
-        <img src={iconSrc} className="navItem-icon"></img>
+        <img src={iconSrc} className="navItem-icon" alt="nav item img"></img>
         <div className="navItem-title">{title}</div>
       </div>
     </div>
