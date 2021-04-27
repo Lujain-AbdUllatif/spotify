@@ -1,5 +1,5 @@
 /* TABLE */
-.playlist-table-head,
+/* .playlist-table-head,
 .playlist-table-body {
   padding: 10px;
   text-align: left;
@@ -30,26 +30,26 @@
 
 .playlist-table-body-disappear {
   display: none;
-}
+} */
 
 /* ROW AND PLAY */
-.playlist-table-body-row {
+/* .playlist-table-body-row {
   color: #191414 !important;
 }
 
 .playlist-table-body-row:hover {
   background-color: rgba(29, 185, 84, 0.2);
   border-radius: 1000px;
-}
+} */
 
 /* NOT FOUND */
-.playlist-table-not-found {
+/* .playlist-table-not-found {
   margin-left: 150px;
   font-size: 18px;
-}
+} */
 
 /* PLAY BTN */
-.playlist-table-play-btn-header {
+/* .playlist-table-play-btn-header {
   width: 65px;
 }
 
@@ -82,4 +82,4 @@
 .playlist-table-play-btn img {
   width: 25px;
   margin: auto;
-}
+} */

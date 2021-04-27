@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 
 // API
 import { recentlyPlayed, featuredPlaylists, mood } from "../../API/homeAPI";

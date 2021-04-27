@@ -8,7 +8,7 @@ import playlistSongs from "../../API/playlistAPI";
 import NavBar from "../../components/NavBar/NavBar";
 import PlaylistHeader from "../../components/PlaylistHeader/PlaylistHeader";
 import PlaylistTableFilter from "../../components/PlaylistTableFilter/PlaylistTableFilter";
-import PlaylistTable from "../../components/PlaylistTable/PlaylistTable";
+import Table from "../../components/Table/Table";
 
 // CSS
 import "./playlistPage.css";
@@ -19,7 +19,9 @@ export default function PlaylistPage() {
   let [duration, setDuration] = React.useState();
   let [tracksNum, setTracksNum] = React.useState();
   let [tracks, setTracks] = React.useState();
-  let [txtValue, setTxtValue] = React.useState("");
+  let [txtValue, setTxtValue] = React.useState();
+
+  // const headers = ["", "TITLE", "ARTIST", "ALBUM", "REALEASE DATE"];
 
   useEffect(() => {
     playlistSongs(history.location.state.data.playlist_id).then((data) => {
@@ -27,7 +29,7 @@ export default function PlaylistPage() {
       setTracksNum(data.playlist_tracks);
       setTracks(data.tracks);
     });
-  }, [duration, tracksNum, tracks]);
+  }, []);
 
   return (
     <div className="playlist-page-container">
@@ -44,7 +46,11 @@ export default function PlaylistPage() {
         <PlaylistTableFilter fun={setTxtValue}></PlaylistTableFilter>
         {/* TABLE */}
         {tracks ? (
-          <PlaylistTable tracks={tracks} txtValue={txtValue}></PlaylistTable>
+          <Table
+            data={tracks}
+            headers={["", "TITLE", "ARTIST", "ALBUM", "REALEASE DATE"]}
+            filterTxt={txtValue}
+          ></Table>
         ) : (
           ""
         )}
