@@ -9,6 +9,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import PlaylistHeader from "../../components/PlaylistHeader/PlaylistHeader";
 import PlaylistTableFilter from "../../components/PlaylistTableFilter/PlaylistTableFilter";
 import Table from "../../components/Table/Table";
+import PlaybackBar from "../../components/PlaybackBar/PlaybackBar";
 
 // CSS
 import "./playlistPage.css";
@@ -55,6 +56,8 @@ export default function PlaylistPage() {
           ""
         )}
       </div>
+      {/* PLAYBACK BAR */}
+      <PlaybackBar />
     </div>
   );
 }
