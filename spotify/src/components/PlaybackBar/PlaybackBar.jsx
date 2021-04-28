@@ -3,7 +3,11 @@ import React from "react";
 // CSS
 import "./playbackBar.css";
 
+// Components
+import ProgressBar from "../ProgressBar/ProgressBar";
+
 // ICONS
+import volumeIcon from "../../assets/volume.png";
 const prevIcon = <i class="fas fa-step-backward"></i>;
 const playIcon = <i class="fas fa-play"></i>;
 const pauseIcon = <i class="fas fa-pause"></i>;
@@ -19,10 +23,14 @@ let songData = {
 export default function PlayBackBar() {
   // States
   let [play, setPlay] = React.useState(true);
+  const [progress, setProgress] = React.useState(0);
+  let total = 300;
 
   //   handles
   const handlePlayClick = () => {
-    setPlay(false);
+    setPlay(!play);
+    console.log("PROGRESS>> ", progress);
+    if (progress !== total) setProgress(progress + 100);
   };
 
   let { name, description, image_url } = songData;
@@ -36,6 +44,7 @@ export default function PlayBackBar() {
           <p>{description}</p>
         </div>
       </div>
+
       {/* CENTER */}
       <div className="playback-bar-center">
         <div className="playback-bar-center-btns">
@@ -48,6 +57,18 @@ export default function PlayBackBar() {
           {/* NEXT SONG */}
           <button>{nextIcon}</button>
         </div>
+        {/* PROGRESS BAR */}
+        <div className="playback-bar-center-progress-bar">
+          <p>{progress}</p>
+          <ProgressBar total={300} progress={progress} />
+          <p>{total}</p>
+        </div>
+      </div>
+
+      {/* RIGHT */}
+      <div className="playback-bar-right">
+        <img src={volumeIcon} alt="volume icon" />
+        <input type="range" className="playback-bar-right-volume" />
       </div>
     </div>
   );
