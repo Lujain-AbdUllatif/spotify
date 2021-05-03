@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 // CSS
 import "./playbackBar.css";
 
 // Components
 import ProgressBar from "../ProgressBar/ProgressBar";
+
+// Context
+import {
+  SongNameContext,
+  AlbumNameContext,
+  PlaylistImgContext,
+} from "../../App";
 
 // ICONS
 import volumeIcon from "../../assets/volume.png";
@@ -20,9 +28,9 @@ let songData = {
   name: "Best of 60's",
 };
 
-export default function PlayBackBar() {
+export default function PlayBackBar({ songName, albumName, playlistImg }) {
   // States
-  let [play, setPlay] = React.useState(true);
+  let [play, setPlay] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   let total = 300;
 
@@ -33,15 +41,32 @@ export default function PlayBackBar() {
     if (progress !== total) setProgress(progress + 100);
   };
 
-  let { name, description, image_url } = songData;
+  // Context Hooks
+  const songName_Context = useContext(SongNameContext);
+  const albumName_Context = useContext(AlbumNameContext);
+  const playlistImg_Context = useContext(PlaylistImgContext);
+  console.log(
+    "In playback bar ",
+    songName_Context,
+    albumName_Context,
+    playlistImg_Context
+  );
+
   return (
     <div className="playback-bar-container">
       {/* LEFT SIDE */}
       <div className="playback-bar-left">
-        <img src={image_url} className="playback-bar-left-img" />
+        {songName_Context.songName ? (
+          <img
+            src={playlistImg_Context.playlistImg}
+            className="playback-bar-left-img"
+          />
+        ) : (
+          ""
+        )}
         <div className="playback-bar-left-div">
-          <h5>{name}</h5>
-          <p>{description}</p>
+          <h5>{songName_Context.songName}</h5>
+          <p>{albumName_Context.albumName}</p>
         </div>
       </div>
 

@@ -23,7 +23,6 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <NavBar active="home"></NavBar>
       <div className="home-div">
         {!recentlyPlayedData ? (
           <Carousel
