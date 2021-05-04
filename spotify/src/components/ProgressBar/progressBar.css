@@ -1,0 +1,21 @@
+.progress-bar {
+  margin-bottom: 15px;
+  padding-top: 0px;
+  margin-top: 0px;
+  width: 750px;
+  height: 5px;
+  background-color: #c4c4c4;
+  border-radius: 50px;
+}
+
+.progress-line {
+  width: 10%;
+  height: 100%;
+  background-color: black;
+}
+
+@media screen and (max-width: 1919px) {
+  .progress-bar {
+    width: 640px;
+  }
+}

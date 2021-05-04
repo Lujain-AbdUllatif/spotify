@@ -1,33 +1,32 @@
 import React from "react";
 import "./navBar.css";
+
 // Components
 import NavItem from "../NavItem/NavItem";
+
 // Icons
 import logo from "../../assets/logo.png";
 import homeIcon from "../../assets/home_icon.png";
 import browseIcon from "../../assets/browse_icon.png";
 import likedSongsIcon from "../../assets/liked_songs_icon.png";
+
 // Hooks
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-export default function NavBar({ active }) {
+export default function NavBar() {
   // Active State from the buttons
-  let homeState = false;
-  let browseState = false;
-  let likedSongsState = false;
-
-  if (active === "home") {
-    homeState = true;
-  }
-  if (active === "browse") {
-    browseState = true;
-  }
-  if (active === "likedSongs") {
-    likedSongsState = true;
-  }
+  let homeState,
+    browseState,
+    likedSongsState = false;
 
   // Navigation - History
   let history = useHistory();
+  let location = useLocation();
+  let active = location.pathname;
+
+  if (active === "/" || active === "/playlist") homeState = true;
+  if (active === "/browse") browseState = true;
+  if (active === "/liked-songs") likedSongsState = true;
 
   let handleHomeClick = () => {
     history.push("/");
