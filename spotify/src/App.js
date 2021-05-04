@@ -18,11 +18,9 @@ export let PlaylistImgContext = React.createContext();
 
 function App() {
   // Context States
-  let [songName, setSongName] = React.useState("Song Name!");
-  let [albumName, setAlbumName] = React.useState("Album Name!");
-  let [playlistImg, setPlaylistImg] = React.useState(
-    "https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg"
-  );
+  let [songName, setSongName] = React.useState();
+  let [albumName, setAlbumName] = React.useState();
+  let [playlistImg, setPlaylistImg] = React.useState();
 
   return (
     <div>
@@ -51,7 +49,15 @@ function App() {
             <LikedSongs />
           </Route>
           <Route path="/playlist">
-            <PlaylistPage />
+            <SongNameContext.Provider value={{ songName, setSongName }}>
+              <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
+                <PlaylistImgContext.Provider
+                  value={{ playlistImg, setPlaylistImg }}
+                >
+                  <PlaylistPage />
+                </PlaylistImgContext.Provider>
+              </AlbumNameContext.Provider>
+            </SongNameContext.Provider>
           </Route>
         </Switch>
       </Router>

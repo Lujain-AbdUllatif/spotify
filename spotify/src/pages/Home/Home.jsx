@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { recentlyPlayed, featuredPlaylists, mood } from "../../API/homeAPI";
 
 // Components
-import NavBar from "../../components/NavBar/NavBar";
 import Carousel from "../../components/Carousel/Carousel";
 
 // CSS

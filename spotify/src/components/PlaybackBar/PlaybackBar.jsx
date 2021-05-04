@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 
 // CSS
 import "./playbackBar.css";
@@ -22,11 +21,11 @@ const pauseIcon = <i class="fas fa-pause"></i>;
 const nextIcon = <i class="fas fa-step-forward"></i>;
 
 // MOCKED DATA
-let songData = {
-  description: "Listen to the best songs from the 60's",
-  image_url: "https://i.scdn.co/image/ab67706f000000035337e18dc6803780d806efba",
-  name: "Best of 60's",
-};
+// let songData = {
+//   description: "Listen to the best songs from the 60's",
+//   image_url: "https://i.scdn.co/image/ab67706f000000035337e18dc6803780d806efba",
+//   name: "Best of 60's",
+// };
 
 export default function PlayBackBar({ songName, albumName, playlistImg }) {
   // States
@@ -60,6 +59,7 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
           <img
             src={playlistImg_Context.playlistImg}
             className="playback-bar-left-img"
+            alt="playlist cover"
           />
         ) : (
           ""

@@ -1,23 +1,24 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useContext } from "react";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
 import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 
+// Context
+import { SongNameContext, AlbumNameContext } from "../../App";
+
 // CSS
 import "./table.css";
 
-export default function Table({
-  data,
-  headers,
-  filterTxt,
-  setSongName,
-  setAlbumName,
-}) {
+export default function Table({ data, headers, filterTxt }) {
+  // Context Hooks
+  const songName_Context = useContext(SongNameContext);
+  const albumName_Context = useContext(AlbumNameContext);
+
   // playBtnClicked
   const playBtnClicked = (track) => {
-    setSongName(track.name);
-    setAlbumName(track.album_name);
+    songName_Context.setSongName(track.name);
+    albumName_Context.setAlbumName(track.album_name);
   };
 
   // Filtering Data

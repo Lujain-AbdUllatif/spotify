@@ -1,8 +1,8 @@
 import React from "react";
 
 // Components
-import NavBar from "../../components/NavBar/NavBar";
 
+// CSS
 import "./browse.css";
 
 export default function Browse() {

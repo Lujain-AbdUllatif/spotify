@@ -10,11 +10,7 @@ import PlaylistTableFilter from "../../components/PlaylistTableFilter/PlaylistTa
 import Table from "../../components/Table/Table";
 
 // Context
-import {
-  SongNameContext,
-  AlbumNameContext,
-  PlaylistImgContext,
-} from "../../App";
+import { PlaylistImgContext } from "../../App";
 
 // CSS
 import "./playlistPage.css";
@@ -26,29 +22,12 @@ export default function PlaylistPage() {
   let [tracksNum, setTracksNum] = React.useState();
   let [tracks, setTracks] = React.useState();
   let [txtValue, setTxtValue] = React.useState();
-  // Playback Bar States
-  // passed sets to table
-  // let [songName, setSongName] = React.useState();
-  // let [albumName, setAlbumName] = React.useState();
-  // it is setted here
-  // let [playlistImg, setPlaylistImg] = React.useState();
 
   // Context Hooks
-  const songName_Context = useContext(SongNameContext);
-  const albumName_Context = useContext(AlbumNameContext);
   const playlistImg_Context = useContext(PlaylistImgContext);
-  console.log(
-    "In playlist page ",
-    songName_Context,
-    albumName_Context,
-    playlistImg_Context
-  );
+  playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
 
   useEffect(() => {
-    // setPlaylistImg(history.location.state.data.image_url);
-    // console.log(playlistImg_Context);
-    // playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
-
     // Fetching playlist data
     playlistSongs(history.location.state.data.playlist_id).then((data) => {
       // Setting States for the table
