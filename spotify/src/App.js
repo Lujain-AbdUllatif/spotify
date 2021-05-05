@@ -15,12 +15,14 @@ import "./App.css";
 export let SongNameContext = React.createContext();
 export let AlbumNameContext = React.createContext();
 export let PlaylistImgContext = React.createContext();
+export let PlayContext = React.createContext();
 
 function App() {
   // Context States
   let [songName, setSongName] = React.useState();
   let [albumName, setAlbumName] = React.useState();
   let [playlistImg, setPlaylistImg] = React.useState();
+  let [play, setPlay] = React.useState(true);
 
   return (
     <div>
@@ -33,7 +35,9 @@ function App() {
             <PlaylistImgContext.Provider
               value={{ playlistImg, setPlaylistImg }}
             >
-              <PlaybackBar />
+              <PlayContext.Provider value={{ play, setPlay }}>
+                <PlaybackBar />
+              </PlayContext.Provider>
             </PlaylistImgContext.Provider>
           </AlbumNameContext.Provider>
         </SongNameContext.Provider>
@@ -54,7 +58,9 @@ function App() {
                 <PlaylistImgContext.Provider
                   value={{ playlistImg, setPlaylistImg }}
                 >
-                  <PlaylistPage />
+                  <PlayContext.Provider value={{ play, setPlay }}>
+                    <PlaylistPage />
+                  </PlayContext.Provider>
                 </PlaylistImgContext.Provider>
               </AlbumNameContext.Provider>
             </SongNameContext.Provider>

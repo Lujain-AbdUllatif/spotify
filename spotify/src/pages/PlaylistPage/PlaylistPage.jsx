@@ -16,12 +16,13 @@ import { PlaylistImgContext } from "../../App";
 import "./playlistPage.css";
 
 export default function PlaylistPage() {
-  let history = useHistory();
   // Table States
   let [duration, setDuration] = React.useState();
   let [tracksNum, setTracksNum] = React.useState();
   let [tracks, setTracks] = React.useState();
   let [txtValue, setTxtValue] = React.useState();
+
+  let history = useHistory();
 
   // Context Hooks
   const playlistImg_Context = useContext(PlaylistImgContext);
@@ -34,6 +35,7 @@ export default function PlaylistPage() {
       setDuration(data.playlist_duration);
       setTracksNum(data.playlist_tracks);
       setTracks(data.tracks);
+      console.log("DEITA", data);
     });
   }, []);
 

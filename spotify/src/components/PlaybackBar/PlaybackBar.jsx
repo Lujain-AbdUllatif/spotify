@@ -11,6 +11,7 @@ import {
   SongNameContext,
   AlbumNameContext,
   PlaylistImgContext,
+  PlayContext,
 } from "../../App";
 
 // ICONS
@@ -20,22 +21,14 @@ const playIcon = <i class="fas fa-play"></i>;
 const pauseIcon = <i class="fas fa-pause"></i>;
 const nextIcon = <i class="fas fa-step-forward"></i>;
 
-// MOCKED DATA
-// let songData = {
-//   description: "Listen to the best songs from the 60's",
-//   image_url: "https://i.scdn.co/image/ab67706f000000035337e18dc6803780d806efba",
-//   name: "Best of 60's",
-// };
-
 export default function PlayBackBar({ songName, albumName, playlistImg }) {
   // States
-  let [play, setPlay] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   let total = 300;
 
   //   handles
   const handlePlayClick = () => {
-    setPlay(!play);
+    play_Context.setPlay(!play_Context.play);
     console.log("PROGRESS>> ", progress);
     if (progress !== total) setProgress(progress + 100);
   };
@@ -44,12 +37,7 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
   const songName_Context = useContext(SongNameContext);
   const albumName_Context = useContext(AlbumNameContext);
   const playlistImg_Context = useContext(PlaylistImgContext);
-  console.log(
-    "In playback bar ",
-    songName_Context,
-    albumName_Context,
-    playlistImg_Context
-  );
+  const play_Context = useContext(PlayContext);
 
   return (
     <div className="playback-bar-container">
@@ -77,7 +65,7 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
           <button>{prevIcon}</button>
           {/* PLAY\PAUSE */}
           <button onClick={handlePlayClick}>
-            {play ? playIcon : pauseIcon}
+            {play_Context.play ? playIcon : pauseIcon}
           </button>
           {/* NEXT SONG */}
           <button>{nextIcon}</button>

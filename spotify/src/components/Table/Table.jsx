@@ -11,6 +11,11 @@ import { SongNameContext, AlbumNameContext } from "../../App";
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt }) {
+  /*************************************************/
+  // Green background for specific row????
+  // State
+  let [green, setGreen] = React.useState(false);
+  /*************************************************/
   // Context Hooks
   const songName_Context = useContext(SongNameContext);
   const albumName_Context = useContext(AlbumNameContext);
@@ -57,9 +62,18 @@ export default function Table({ data, headers, filterTxt }) {
       </tr>
       {finalTracks.map((track) => {
         return (
-          <tr className="table-row">
+          <tr
+            className="table-row"
+            style={green ? { background: "rgba(29, 185, 84, 0.2)" } : {}}
+          >
             <td className="table-data-play-btn">
-              <TablePlayBtn track={track} playBtnClicked={playBtnClicked} />
+              <TablePlayBtn
+                id={track.track_id}
+                track={track}
+                playBtnClicked={playBtnClicked}
+                setGreen={setGreen}
+                // GREEN BACKGROUND ????
+              />
             </td>
             <td className="table-data table-data-like-btn">
               <LikeBtn value={Boolean(Math.round(Math.random()))} />
