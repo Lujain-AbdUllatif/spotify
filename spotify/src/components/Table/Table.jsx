@@ -11,11 +11,6 @@ import { SongNameContext, AlbumNameContext } from "../../App";
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt }) {
-  /*************************************************/
-  // Green background for specific row????
-  // State
-  let [green, setGreen] = React.useState(false);
-  /*************************************************/
   // Context Hooks
   const songName_Context = useContext(SongNameContext);
   const albumName_Context = useContext(AlbumNameContext);
@@ -52,7 +47,9 @@ export default function Table({ data, headers, filterTxt }) {
     return <p className="table-not-found">track not found &#128533;</p>;
 
   return (
+    /***TABLE***/
     <table className="table">
+      {/**** HEADERS ****/}
       <tr>
         <th className="table-header-play-btn"></th>
         {headersMemo.map((header) => {
@@ -62,17 +59,13 @@ export default function Table({ data, headers, filterTxt }) {
       </tr>
       {finalTracks.map((track) => {
         return (
-          <tr
-            className="table-row"
-            style={green ? { background: "rgba(29, 185, 84, 0.2)" } : {}}
-          >
+          /**** ROWS ****/
+          <tr className="table-row">
             <td className="table-data-play-btn">
               <TablePlayBtn
                 id={track.track_id}
                 track={track}
                 playBtnClicked={playBtnClicked}
-                setGreen={setGreen}
-                // GREEN BACKGROUND ????
               />
             </td>
             <td className="table-data table-data-like-btn">

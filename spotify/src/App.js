@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Browse from "./pages/Browse/Browse";
 import LikedSongs from "./pages/LikedSongs/LikedSongs";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
+
 // CSS
 import "./App.css";
 

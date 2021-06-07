@@ -21,8 +21,10 @@ export default function Carousel({ title, data }) {
       </div>
     );
 
-  let playLists = data.playlists.map((a) => {
-    return <PlayList data={a}></PlayList>;
+  let playLists = data.playlists.map((playlistData) => {
+    return (
+      <PlayList data={playlistData} key={playlistData.playlist_id}></PlayList>
+    );
   });
 
   // Click Handler
@@ -47,14 +49,14 @@ export default function Carousel({ title, data }) {
             onClick={handleLeftClick}
             disabled={!disBtn}
           >
-            <i class="fas fa-chevron-left"></i>
+            <i className="fas fa-chevron-left"></i>
           </button>
           <button
             className={`carousel-btn ${greyBtn ? "carousel-grey-btn" : ""}`}
             onClick={handleRightClick}
             disabled={disBtn}
           >
-            <i class="fas fa-chevron-right"></i>
+            <i className="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>

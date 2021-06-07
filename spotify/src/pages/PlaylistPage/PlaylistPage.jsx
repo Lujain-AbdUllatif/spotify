@@ -26,16 +26,15 @@ export default function PlaylistPage() {
 
   // Context Hooks
   const playlistImg_Context = useContext(PlaylistImgContext);
-  playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
 
   useEffect(() => {
+    playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
     // Fetching playlist data
     playlistSongs(history.location.state.data.playlist_id).then((data) => {
       // Setting States for the table
       setDuration(data.playlist_duration);
       setTracksNum(data.playlist_tracks);
       setTracks(data.tracks);
-      console.log("DEITA", data);
     });
   }, []);
 
@@ -55,13 +54,7 @@ export default function PlaylistPage() {
         <PlaylistTableFilter fun={setTxtValue}></PlaylistTableFilter>
         {/* TABLE */}
         {tracks ? (
-          <Table
-            data={tracks}
-            headers={headers}
-            filterTxt={txtValue}
-            // setSongName={setSongName}
-            // setAlbumName={setAlbumName}
-          ></Table>
+          <Table data={tracks} headers={headers} filterTxt={txtValue}></Table>
         ) : (
           ""
         )}

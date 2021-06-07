@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // ICONS
 import playIcon from "../../assets/play_line_icon.png";
@@ -14,41 +14,51 @@ import { PlayContext } from "../../App";
 import "./tablePlayBtn.css";
 
 export default function TablePlayBtn({ track, playBtnClicked, id }) {
-  // States
-  let [playState, setPlayState] = useState(true);
   // Context Hook
   const play_Context = useContext(PlayContext);
 
-  // song audio
-  let songAudioElement;
-  let songAudioSource;
+  // States
+  let [playState, setPlayState] = useState(false);
+  let [songAudioElement, setSongAudioElement] = useState();
+  let [songAudioSource, setSongAudioSource] = useState();
 
-  const handleClick = (e) => {
+  let handleClick = (e) => {
+    console.log("HERE");
+    console.log(typeof parseInt(e.target.parentElement.id));
+
     // setting song and album name
     playBtnClicked(track);
     // play button simultaneously to playback bar
-    play_Context.setPlay(!play_Context.play);
+    play_Context.setPlay(parseInt(e.target.parentElement.id));
     setPlayState(!playState);
     // song audio id in the API link
-    songAudioElement = new Audio(songAudio(e.currentTarget.id));
-    console.log("songAudioElement   ", songAudioElement);
-    songAudioSource = songAudio(e.currentTarget.id);
-    console.log("songAudioSource   ", songAudioSource);
+    // setSongAudioElement(new Audio(songAudio(e.currentTarget.id)));
+    // console.log("songAudioElement   ", songAudioElement);
+    if (!playState) e.currentTarget.childNodes[1].pause();
+    else {
+      setSongAudioSource(songAudio(e.currentTarget.id));
+      // console.log("songAudioSource   ", songAudioSource);
+      // console.log("TARGET IS ", e.currentTarget.childNodes[1]);
+      // e.currentTarget.childNodes[1].load();
+      // e.currentTarget.childNodes[1].play();
+      console.log("PLAYED");
+    }
   };
 
   return (
-    <button className="table-play-btn" onClick={handleClick} id={id}>
-      <img src={playState ? playIcon : pauseIcon} alt="play pause" />
+    <button
+      className="table-play-btn"
+      onClick={handleClick}
+      id={id}
+      style={playState ? { visibility: "visible" } : {}}
+    >
+      <img src={!playState ? playIcon : pauseIcon} alt="play pause" />
+      {/* AudioElement */}
+      <audio>
+        <source src={songAudioSource} />
+      </audio>
       {/* SongAudioElement */}
-      {songAudioElement ? songAudioElement : "nth, "}
-      {/* SongAudioSource */}
-      {songAudioSource ? (
-        <audio controls src={songAudioSource}></audio>
-      ) : (
-        "nth2"
-      )}
-      {/* Normal Audio */}
-      <audio src="http://api.sprintt.co/spotify/play/2916?access=ZDg5OThiZTctNTYxNy00NWY0LTgzOGMtMDQ3OWE2N2FkZGUzPT09MTE6Mjo0OA=="></audio>
+      {/* {songAudioElement ? songAudioElement : "nth"} */}
     </button>
   );
 }
