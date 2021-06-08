@@ -17,13 +17,15 @@ export let SongNameContext = React.createContext();
 export let AlbumNameContext = React.createContext();
 export let PlaylistImgContext = React.createContext();
 export let PlayContext = React.createContext();
+export let SongAudioElementContext = React.createContext();
 
 function App() {
   // Context States
   let [songName, setSongName] = React.useState();
   let [albumName, setAlbumName] = React.useState();
   let [playlistImg, setPlaylistImg] = React.useState();
-  let [play, setPlay] = React.useState(true);
+  let [play, setPlay] = React.useState({ state: true, nowPlaying: null });
+  let [songAudioElement, setSongAudioElement] = React.useState();
 
   return (
     <div>
@@ -37,7 +39,9 @@ function App() {
               value={{ playlistImg, setPlaylistImg }}
             >
               <PlayContext.Provider value={{ play, setPlay }}>
-                <PlaybackBar />
+                <SongAudioElementContext.Provider value={{ songAudioElement }}>
+                  <PlaybackBar />
+                </SongAudioElementContext.Provider>
               </PlayContext.Provider>
             </PlaylistImgContext.Provider>
           </AlbumNameContext.Provider>
@@ -60,7 +64,11 @@ function App() {
                   value={{ playlistImg, setPlaylistImg }}
                 >
                   <PlayContext.Provider value={{ play, setPlay }}>
-                    <PlaylistPage />
+                    <SongAudioElementContext.Provider
+                      value={{ songAudioElement, setSongAudioElement }}
+                    >
+                      <PlaylistPage />
+                    </SongAudioElementContext.Provider>
                   </PlayContext.Provider>
                 </PlaylistImgContext.Provider>
               </AlbumNameContext.Provider>

@@ -12,6 +12,7 @@ import {
   AlbumNameContext,
   PlaylistImgContext,
   PlayContext,
+  SongAudioElementContext,
 } from "../../App";
 
 // ICONS
@@ -31,13 +32,21 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
   const albumName_Context = useContext(AlbumNameContext);
   const playlistImg_Context = useContext(PlaylistImgContext);
   const play_Context = useContext(PlayContext);
-
-  console.log("PLay context === ", typeof play_Context.play);
+  const songAudioElement_Context = useContext(SongAudioElementContext);
 
   //   handles
   const handlePlayClick = () => {
-    play_Context.setPlay(!play_Context.play);
-    console.log("play context is ", play_Context.play);
+    if (!play_Context.play.state) {
+      songAudioElement_Context.songAudioElement.pause();
+      console.log("PAUSED");
+    } else {
+      songAudioElement_Context.songAudioElement.play();
+      console.log("PLAYED");
+    }
+
+    play_Context.setPlay((prev) => {
+      return { ...prev, state: !prev.state };
+    });
     // console.log("PROGRESS>> ", progress);
     // if (progress !== total) setProgress(progress + 100);
   };
@@ -68,10 +77,7 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
           <button>{prevIcon}</button>
           {/* PLAY\PAUSE */}
           <button onClick={handlePlayClick}>
-            {typeof play_Context.play == "number" ||
-            typeof play_Context.play == "boolean"
-              ? playIcon
-              : pauseIcon}
+            {play_Context?.play?.state ? playIcon : pauseIcon}
           </button>
           {/* NEXT SONG */}
           <button>{nextIcon}</button>

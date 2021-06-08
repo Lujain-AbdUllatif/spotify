@@ -8,7 +8,7 @@ import pauseIcon from "../../assets/pause_line_icon.png";
 import songAudio from "../../API/songAudio";
 
 // Context
-import { PlayContext } from "../../App";
+import { PlayContext, SongAudioElementContext } from "../../App";
 
 // CSS
 import "./tablePlayBtn.css";
@@ -16,33 +16,44 @@ import "./tablePlayBtn.css";
 export default function TablePlayBtn({ track, playBtnClicked, id }) {
   // Context Hook
   const play_Context = useContext(PlayContext);
+  const songAudioElement_Context = useContext(SongAudioElementContext);
 
-  // States
-  let [playState, setPlayState] = useState(false);
-  let [songAudioElement, setSongAudioElement] = useState();
-  let [songAudioSource, setSongAudioSource] = useState();
+  let isItMe = id === play_Context.play.nowPlaying;
+
+  useEffect(() => {
+    if (songAudioElement_Context.songAudioElement) {
+      songAudioElement_Context.songAudioElement.play();
+    }
+  }, [songAudioElement_Context.songAudioElement]);
 
   let handleClick = (e) => {
-    console.log("HERE");
-    console.log(typeof parseInt(e.target.parentElement.id));
-
+    console.log(songAudio(id));
     // setting song and album name
     playBtnClicked(track);
     // play button simultaneously to playback bar
-    play_Context.setPlay(parseInt(e.target.parentElement.id));
-    setPlayState(!playState);
-    // song audio id in the API link
-    // setSongAudioElement(new Audio(songAudio(e.currentTarget.id)));
-    // console.log("songAudioElement   ", songAudioElement);
-    if (!playState) e.currentTarget.childNodes[1].pause();
-    else {
-      setSongAudioSource(songAudio(e.currentTarget.id));
-      // console.log("songAudioSource   ", songAudioSource);
-      // console.log("TARGET IS ", e.currentTarget.childNodes[1]);
-      // e.currentTarget.childNodes[1].load();
-      // e.currentTarget.childNodes[1].play();
-      console.log("PLAYED");
+    if (isItMe) {
+      if (!play_Context.play.state) {
+        songAudioElement_Context.songAudioElement.pause();
+        console.log("PAUSED");
+      } else {
+        songAudioElement_Context.songAudioElement.play();
+        console.log("PLAYED");
+      }
     }
+    if (!isItMe) {
+      if (songAudioElement_Context.songAudioElement) {
+        songAudioElement_Context.songAudioElement.pause();
+      } else {
+        songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
+        songAudioElement_Context.songAudioElement &&
+          songAudioElement_Context.songAudioElement.play();
+      }
+      console.log("NEW SONG");
+    }
+
+    play_Context.setPlay((prev) => {
+      return { state: !prev.state, nowPlaying: id };
+    });
   };
 
   return (
@@ -50,15 +61,16 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
       className="table-play-btn"
       onClick={handleClick}
       id={id}
-      style={playState ? { visibility: "visible" } : {}}
+      style={isItMe ? { visibility: "visible" } : {}}
     >
-      <img src={!playState ? playIcon : pauseIcon} alt="play pause" />
-      {/* AudioElement */}
-      <audio>
-        <source src={songAudioSource} />
-      </audio>
-      {/* SongAudioElement */}
-      {/* {songAudioElement ? songAudioElement : "nth"} */}
+      {isItMe ? (
+        <img
+          src={play_Context.play.state ? playIcon : pauseIcon}
+          alt="play pause"
+        />
+      ) : (
+        <img src={playIcon} alt="play pause" />
+      )}
     </button>
   );
 }
