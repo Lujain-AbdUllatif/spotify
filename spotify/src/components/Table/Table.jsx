@@ -49,42 +49,48 @@ export default function Table({ data, headers, filterTxt }) {
   return (
     /***TABLE***/
     <table className="table">
-      {/**** HEADERS ****/}
-      <tr>
-        <th className="table-header-play-btn"></th>
-        {headersMemo.map((header) => {
-          return <th className="table-header">{header}</th>;
+      <tbody>
+        {/**** HEADERS ****/}
+        <tr>
+          <th className="table-header-play-btn"></th>
+          {headersMemo.map((header) => {
+            return (
+              <th className="table-header" key={header.slice(0, 2)}>
+                {header}
+              </th>
+            );
+          })}
+          <th className="table-header-play-btn-extentions"></th>
+        </tr>
+        {finalTracks.map((track) => {
+          return (
+            /**** ROWS ****/
+            <tr className="table-row" key={track.track_id}>
+              <td className="table-data-play-btn">
+                <TablePlayBtn
+                  id={track.track_id}
+                  track={track}
+                  playBtnClicked={playBtnClicked}
+                />
+              </td>
+              <td className="table-data table-data-like-btn">
+                <LikeBtn value={Boolean(Math.round(Math.random()))} />
+              </td>
+              <td className="table-data" id="song-name">
+                {track.name}
+              </td>
+              <td className="table-data" id="artist-name">
+                {track.artists_names}
+              </td>
+              <td className="table-data" id="album-name">
+                {track.album_name}
+              </td>
+              <td className="table-data">{track.release_date}</td>
+              <td className="table-data-play-btn-extention"></td>
+            </tr>
+          );
         })}
-        <th className="table-header-play-btn-extentions"></th>
-      </tr>
-      {finalTracks.map((track) => {
-        return (
-          /**** ROWS ****/
-          <tr className="table-row">
-            <td className="table-data-play-btn">
-              <TablePlayBtn
-                id={track.track_id}
-                track={track}
-                playBtnClicked={playBtnClicked}
-              />
-            </td>
-            <td className="table-data table-data-like-btn">
-              <LikeBtn value={Boolean(Math.round(Math.random()))} />
-            </td>
-            <td className="table-data" id="song-name">
-              {track.name}
-            </td>
-            <td className="table-data" id="artist-name">
-              {track.artists_names}
-            </td>
-            <td className="table-data" id="album-name">
-              {track.album_name}
-            </td>
-            <td className="table-data">{track.release_date}</td>
-            <td className="table-data-play-btn-extention"></td>
-          </tr>
-        );
-      })}
+      </tbody>
     </table>
   );
 }

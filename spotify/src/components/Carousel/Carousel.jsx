@@ -21,7 +21,7 @@ export default function Carousel({ title, data }) {
       </div>
     );
 
-  let playLists = data.playlists.map((playlistData) => {
+  let playLists = data.playlists?.map((playlistData) => {
     return (
       <PlayList data={playlistData} key={playlistData.playlist_id}></PlayList>
     );
@@ -62,10 +62,10 @@ export default function Carousel({ title, data }) {
       </div>
       <div className="carousel-playlists">
         <div className={`carousel-1st ${arrow ? "carousel-disappear" : ""}`}>
-          {playLists.slice(0, 5)}
+          {playLists?.slice(0, 5)}
         </div>
         <div className={`carousel-2nd ${arrow ? "" : "carousel-disappear"}`}>
-          {playLists.slice(5, 10)}
+          {playLists?.slice(5, 10)}
         </div>
       </div>
     </div>

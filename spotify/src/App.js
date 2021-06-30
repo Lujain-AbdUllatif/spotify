@@ -39,7 +39,9 @@ function App() {
               value={{ playlistImg, setPlaylistImg }}
             >
               <PlayContext.Provider value={{ play, setPlay }}>
-                <SongAudioElementContext.Provider value={{ songAudioElement }}>
+                <SongAudioElementContext.Provider
+                  value={{ songAudioElement, setSongAudioElement }}
+                >
                   <PlaybackBar />
                 </SongAudioElementContext.Provider>
               </PlayContext.Provider>
@@ -58,6 +60,7 @@ function App() {
             <LikedSongs />
           </Route>
           <Route path="/playlist">
+            {/* CONTEXT START */}
             <SongNameContext.Provider value={{ songName, setSongName }}>
               <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
                 <PlaylistImgContext.Provider
@@ -67,6 +70,7 @@ function App() {
                     <SongAudioElementContext.Provider
                       value={{ songAudioElement, setSongAudioElement }}
                     >
+                      {/* CONTEXT ENDS */}
                       <PlaylistPage />
                     </SongAudioElementContext.Provider>
                   </PlayContext.Provider>

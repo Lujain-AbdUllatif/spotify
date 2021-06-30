@@ -18,41 +18,43 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
   const play_Context = useContext(PlayContext);
   const songAudioElement_Context = useContext(SongAudioElementContext);
 
-  let isItMe = id === play_Context.play.nowPlaying;
+  // create a constant to know if the play song matches the curr
+  let curPlay = id === play_Context.play.song_id && !play_Context.play.state;
+  let curSong = id === play_Context.play.song_id && play_Context.play.state;
 
   useEffect(() => {
     if (songAudioElement_Context.songAudioElement) {
       songAudioElement_Context.songAudioElement.play();
+
+      console.log("PLAYING!!!");
     }
   }, [songAudioElement_Context.songAudioElement]);
 
   let handleClick = (e) => {
-    console.log(songAudio(id));
     // setting song and album name
     playBtnClicked(track);
-    // play button simultaneously to playback bar
-    if (isItMe) {
-      if (!play_Context.play.state) {
-        songAudioElement_Context.songAudioElement.pause();
-        console.log("PAUSED");
-      } else {
-        songAudioElement_Context.songAudioElement.play();
-        console.log("PLAYED");
-      }
+
+    //play when the clicked song is already the current song
+    if (curSong) {
+      songAudioElement_Context.songAudioElement.play();
     }
-    if (!isItMe) {
-      if (songAudioElement_Context.songAudioElement) {
+    // pause if the playing song is the clicked song
+    if (curPlay) {
+      songAudioElement_Context.songAudioElement.pause();
+    }
+    // if neither then update the song (when the song state is updated the useEffect works to play it)
+    if (!curPlay && !curSong) {
+      play_Context.setPlay((prev) => {
+        return { state: true, song_id: null };
+      });
+      if (songAudioElement_Context.songAudioElement)
         songAudioElement_Context.songAudioElement.pause();
-      } else {
-        songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
-        songAudioElement_Context.songAudioElement &&
-          songAudioElement_Context.songAudioElement.play();
-      }
-      console.log("NEW SONG");
+      songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
     }
 
+    // changing the play state
     play_Context.setPlay((prev) => {
-      return { state: !prev.state, nowPlaying: id };
+      return { state: !prev.state, song_id: id };
     });
   };
 
@@ -61,16 +63,9 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
       className="table-play-btn"
       onClick={handleClick}
       id={id}
-      style={isItMe ? { visibility: "visible" } : {}}
+      style={curPlay ? { visibility: "visible" } : {}}
     >
-      {isItMe ? (
-        <img
-          src={play_Context.play.state ? playIcon : pauseIcon}
-          alt="play pause"
-        />
-      ) : (
-        <img src={playIcon} alt="play pause" />
-      )}
+      <img src={curPlay ? pauseIcon : playIcon} alt="play pause" />
     </button>
   );
 }

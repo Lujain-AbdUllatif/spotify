@@ -36,16 +36,18 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
 
   //   handles
   const handlePlayClick = () => {
-    if (!play_Context.play.state) {
-      songAudioElement_Context.songAudioElement.pause();
-      console.log("PAUSED");
-    } else {
+    // song streaming
+    if (play_Context.play.state) {
+      if (songAudioElement_Context.songAudioElement)
+        songAudioElement_Context.songAudioElement.pause();
       songAudioElement_Context.songAudioElement.play();
-      console.log("PLAYED");
+    } else {
+      songAudioElement_Context.songAudioElement.pause();
     }
-
-    play_Context.setPlay((prev) => {
-      return { ...prev, state: !prev.state };
+    // play-pause btn
+    play_Context.setPlay({
+      ...play_Context.play,
+      state: !play_Context.play.state,
     });
     // console.log("PROGRESS>> ", progress);
     // if (progress !== total) setProgress(progress + 100);
@@ -77,7 +79,7 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
           <button>{prevIcon}</button>
           {/* PLAY\PAUSE */}
           <button onClick={handlePlayClick}>
-            {play_Context?.play?.state ? playIcon : pauseIcon}
+            {play_Context.play.state ? playIcon : pauseIcon}
           </button>
           {/* NEXT SONG */}
           <button>{nextIcon}</button>
