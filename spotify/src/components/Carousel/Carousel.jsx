@@ -8,9 +8,12 @@ import "./carousel.css";
 
 export default function Carousel({ title, data }) {
   // States
-  let [arrow, setArrow] = React.useState(false);
-  let [disBtn, setDisBtn] = React.useState(false);
-  let [greyBtn, setGreyBtn] = React.useState(false);
+  const [greyState, setGreyState] = React.useState({
+    arrow: false,
+    disBtn: false,
+    greyBtn: false,
+  });
+  const { arrow, disBtn, greyBtn } = greyState;
 
   if (!data)
     return (
@@ -29,14 +32,14 @@ export default function Carousel({ title, data }) {
 
   // Click Handler
   let handleRightClick = () => {
-    setArrow(true);
-    setDisBtn(true);
-    setGreyBtn(true);
+    setGreyState(() => {
+      return { arrow: true, disBtn: true, greyBtn: true };
+    });
   };
   let handleLeftClick = () => {
-    setArrow(false);
-    setDisBtn(false);
-    setGreyBtn(false);
+    setGreyState(() => {
+      return { arrow: false, disBtn: false, greyBtn: false };
+    });
   };
 
   return (

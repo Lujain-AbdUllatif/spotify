@@ -13,19 +13,25 @@ import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
 import "./App.css";
 
 // Creating Contexts
-export let SongNameContext = React.createContext();
-export let AlbumNameContext = React.createContext();
-export let PlaylistImgContext = React.createContext();
-export let PlayContext = React.createContext();
-export let SongAudioElementContext = React.createContext();
+export const SongNameContext = React.createContext();
+export const AlbumNameContext = React.createContext();
+export const PlaylistImgContext = React.createContext();
+export const PlayContext = React.createContext();
+export const SongAudioElementContext = React.createContext();
+export const SongDurationContext = React.createContext();
+export const SongChangedContext = React.createContext();
+export const NextSongContext = React.createContext();
 
 function App() {
   // Context States
-  let [songName, setSongName] = React.useState();
-  let [albumName, setAlbumName] = React.useState();
-  let [playlistImg, setPlaylistImg] = React.useState();
-  let [play, setPlay] = React.useState({ state: true, nowPlaying: null });
-  let [songAudioElement, setSongAudioElement] = React.useState();
+  const [songName, setSongName] = React.useState();
+  const [albumName, setAlbumName] = React.useState();
+  const [playlistImg, setPlaylistImg] = React.useState();
+  const [play, setPlay] = React.useState({ state: true, nowPlaying: null });
+  const [songAudioElement, setSongAudioElement] = React.useState();
+  const [songDuration, setSongDuration] = React.useState();
+  const [songChanged, setSongChanged] = React.useState(false);
+  const [nextSong, setNextSong] = React.useState();
 
   return (
     <div>
@@ -42,7 +48,24 @@ function App() {
                 <SongAudioElementContext.Provider
                   value={{ songAudioElement, setSongAudioElement }}
                 >
-                  <PlaybackBar />
+                  <SongDurationContext.Provider
+                    value={{ songDuration, setSongDuration }}
+                  >
+                    <SongChangedContext.Provider
+                      value={{ songChanged, setSongChanged }}
+                    >
+                      <NextSongContext.Provider
+                        value={{
+                          nextSong,
+                          setNextSong,
+                        }}
+                      >
+                        {/**********/}
+                        <PlaybackBar />
+                        {/**********/}
+                      </NextSongContext.Provider>
+                    </SongChangedContext.Provider>
+                  </SongDurationContext.Provider>
                 </SongAudioElementContext.Provider>
               </PlayContext.Provider>
             </PlaylistImgContext.Provider>
@@ -60,7 +83,6 @@ function App() {
             <LikedSongs />
           </Route>
           <Route path="/playlist">
-            {/* CONTEXT START */}
             <SongNameContext.Provider value={{ songName, setSongName }}>
               <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
                 <PlaylistImgContext.Provider
@@ -70,8 +92,24 @@ function App() {
                     <SongAudioElementContext.Provider
                       value={{ songAudioElement, setSongAudioElement }}
                     >
-                      {/* CONTEXT ENDS */}
-                      <PlaylistPage />
+                      <SongDurationContext.Provider
+                        value={{ songDuration, setSongDuration }}
+                      >
+                        <SongChangedContext.Provider
+                          value={{ songChanged, setSongChanged }}
+                        >
+                          <NextSongContext.Provider
+                            value={{
+                              nextSong,
+                              setNextSong,
+                            }}
+                          >
+                            {/**********/}
+                            <PlaylistPage />
+                            {/**********/}
+                          </NextSongContext.Provider>
+                        </SongChangedContext.Provider>
+                      </SongDurationContext.Provider>
                     </SongAudioElementContext.Provider>
                   </PlayContext.Provider>
                 </PlaylistImgContext.Provider>

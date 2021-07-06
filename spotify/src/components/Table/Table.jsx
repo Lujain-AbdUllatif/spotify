@@ -1,25 +1,59 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useEffect } from "react";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
 import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 
 // Context
-import { SongNameContext, AlbumNameContext } from "../../App";
+import AppContext from "../../contextCustomHooks";
 
 // CSS
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt }) {
   // Context Hooks
-  const songName_Context = useContext(SongNameContext);
-  const albumName_Context = useContext(AlbumNameContext);
+  const {
+    songName_Context,
+    albumName_Context,
+    songDuration_Context,
+    nextSong_Context,
+    songAudioElement_Context,
+    songChanged_Context,
+  } = AppContext();
 
   // playBtnClicked
-  const playBtnClicked = (track) => {
+  const playBtnClicked = (track, e) => {
+    // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
+    songDuration_Context.setSongDuration(track.duration);
+    // setting the next song details
+    const nextSongDetails =
+      e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
+        .childNodes[0].dataset;
+    nextSong_Context.setNextSong({
+      id:
+        e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
+          .childNodes[0].id,
+      ...nextSongDetails,
+    });
   };
+
+  // USE EFFECT FOR PLAYING A SONG
+  useEffect(() => {
+    console.log("CHANGED!");
+    if (
+      songAudioElement_Context.songAudioElement &&
+      songChanged_Context.songChanged
+    ) {
+      songAudioElement_Context.songAudioElement
+        .play()
+        .then()
+        .catch((err) => console.log("ERROR IS HERE", err));
+      console.log("PLAYING");
+      songChanged_Context.setSongChanged(false);
+    }
+  }, [songChanged_Context.songChanged]);
 
   // Filtering Data
   let filteredData;

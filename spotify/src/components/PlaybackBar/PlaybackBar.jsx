@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 // CSS
 import "./playbackBar.css";
@@ -7,13 +7,10 @@ import "./playbackBar.css";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 // Context
-import {
-  SongNameContext,
-  AlbumNameContext,
-  PlaylistImgContext,
-  PlayContext,
-  SongAudioElementContext,
-} from "../../App";
+import AppContext from "../../contextCustomHooks";
+
+// Assets Functions
+import { sec2min } from "../../assetesFunctions";
 
 // ICONS
 import volumeIcon from "../../assets/volume.png";
@@ -22,35 +19,41 @@ const playIcon = <i className="fas fa-play"></i>;
 const pauseIcon = <i className="fas fa-pause"></i>;
 const nextIcon = <i className="fas fa-step-forward"></i>;
 
-export default function PlayBackBar({ songName, albumName, playlistImg }) {
+export default function PlayBackBar() {
   // States
   const [progress, setProgress] = React.useState(0);
-  let total = 300;
 
   // Context Hooks
-  const songName_Context = useContext(SongNameContext);
-  const albumName_Context = useContext(AlbumNameContext);
-  const playlistImg_Context = useContext(PlaylistImgContext);
-  const play_Context = useContext(PlayContext);
-  const songAudioElement_Context = useContext(SongAudioElementContext);
+  const {
+    songName_Context,
+    albumName_Context,
+    playlistImg_Context,
+    play_Context,
+    songAudioElement_Context,
+    songDuration_Context,
+  } = AppContext();
+
+  // TOTAL
+  const total = songDuration_Context.songDuration;
 
   //   handles
   const handlePlayClick = () => {
-    // song streaming
-    if (play_Context.play.state) {
-      if (songAudioElement_Context.songAudioElement)
+    if (songName_Context.songName) {
+      // song streaming
+      if (play_Context.play.state) {
+        if (songAudioElement_Context.songAudioElement)
+          songAudioElement_Context.songAudioElement.pause();
+
+        songAudioElement_Context.songAudioElement.play();
+      } else {
         songAudioElement_Context.songAudioElement.pause();
-      songAudioElement_Context.songAudioElement.play();
-    } else {
-      songAudioElement_Context.songAudioElement.pause();
+      }
+      // play-pause btn
+      play_Context.setPlay({
+        ...play_Context.play,
+        state: !play_Context.play.state,
+      });
     }
-    // play-pause btn
-    play_Context.setPlay({
-      ...play_Context.play,
-      state: !play_Context.play.state,
-    });
-    // console.log("PROGRESS>> ", progress);
-    // if (progress !== total) setProgress(progress + 100);
   };
 
   return (
@@ -86,9 +89,13 @@ export default function PlayBackBar({ songName, albumName, playlistImg }) {
         </div>
         {/* PROGRESS BAR */}
         <div className="playback-bar-center-progress-bar">
-          <p>{progress}</p>
-          <ProgressBar total={300} progress={progress} />
-          <p>{total}</p>
+          <p>{progress ? sec2min(progress) : "--:--"}</p>
+          <ProgressBar
+            total={total}
+            setProgress={setProgress}
+            progress={progress}
+          />
+          <p>{total ? sec2min(total) : "--:--"}</p>
         </div>
       </div>
 
