@@ -27,8 +27,11 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
   let curSong = id === play_Context.play.song_id && play_Context.play.state;
 
   // useEffect(() => {
-  //   console.log("CHANGED!");
-  //   if (songAudioElement_Context.songAudioElement) {
+  //   console.log("song  change? ", songChanged_Context.songChange);
+  //   if (
+  //     songAudioElement_Context.songAudioElement &&
+  //     songChanged_Context.songChanged
+  //   ) {
   //     songAudioElement_Context.songAudioElement
   //       .play()
   //       .then()
@@ -45,27 +48,27 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
     //play when the clicked song is already the current song
     if (curSong) {
       songAudioElement_Context.songAudioElement.play();
+      // console.log("PLAYING curSong");
     }
     // pause if the playing song is the clicked song
-    if (curPlay) {
+    else if (curPlay) {
       songAudioElement_Context.songAudioElement.pause();
+      // console.log("PAUSING curPlay");
     }
     // if neither then update the song (when the song state is updated the useEffect works to play it)
-    if (!curSong) {
+    else {
       if (songAudioElement_Context.songAudioElement) {
         songAudioElement_Context.songAudioElement.pause();
-        console.log("PAUSE 2");
-        play_Context.setPlay((prev) => {
-          return { state: true, song_id: null };
-        });
+        console.log("PAUSE not the curSong ");
       }
+
       songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
       songChanged_Context.setSongChanged(true);
     }
 
     // changing the play state
     play_Context.setPlay((prev) => {
-      return { state: !prev.state, song_id: id };
+      return { state: curSong || curPlay ? !prev.state : false, song_id: id };
     });
   };
 

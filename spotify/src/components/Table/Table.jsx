@@ -19,6 +19,7 @@ export default function Table({ data, headers, filterTxt }) {
     nextSong_Context,
     songAudioElement_Context,
     songChanged_Context,
+    play_Context,
   } = AppContext();
 
   // playBtnClicked
@@ -41,7 +42,12 @@ export default function Table({ data, headers, filterTxt }) {
 
   // USE EFFECT FOR PLAYING A SONG
   useEffect(() => {
-    console.log("CHANGED!");
+    // console.log("song  change? ", songChanged_Context.songChanged);
+    // console.log("play context ", play_Context.play);
+    // const playStatus =
+    //   songAudioElement_Context.songAudioElement &&
+    //   songAudioElement_Context.songAudioElement.play();
+    // console.log("PLAY STATUS ", playStatus);
     if (
       songAudioElement_Context.songAudioElement &&
       songChanged_Context.songChanged
@@ -50,10 +56,10 @@ export default function Table({ data, headers, filterTxt }) {
         .play()
         .then()
         .catch((err) => console.log("ERROR IS HERE", err));
-      console.log("PLAYING");
+      // console.log("PLAYING USE-EFFECT");
       songChanged_Context.setSongChanged(false);
     }
-  }, [songChanged_Context.songChanged]);
+  }, [songAudioElement_Context.songAudioElement]);
 
   // Filtering Data
   let filteredData;
