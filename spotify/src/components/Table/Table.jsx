@@ -19,7 +19,6 @@ export default function Table({ data, headers, filterTxt }) {
     nextSong_Context,
     songAudioElement_Context,
     songChanged_Context,
-    play_Context,
   } = AppContext();
 
   // playBtnClicked
@@ -42,12 +41,6 @@ export default function Table({ data, headers, filterTxt }) {
 
   // USE EFFECT FOR PLAYING A SONG
   useEffect(() => {
-    // console.log("song  change? ", songChanged_Context.songChanged);
-    // console.log("play context ", play_Context.play);
-    // const playStatus =
-    //   songAudioElement_Context.songAudioElement &&
-    //   songAudioElement_Context.songAudioElement.play();
-    // console.log("PLAY STATUS ", playStatus);
     if (
       songAudioElement_Context.songAudioElement &&
       songChanged_Context.songChanged

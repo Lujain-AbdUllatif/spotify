@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 
 // ICONS
 import playIcon from "../../assets/play_line_icon.png";
@@ -26,21 +26,6 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
   let curPlay = id === play_Context.play.song_id && !play_Context.play.state;
   let curSong = id === play_Context.play.song_id && play_Context.play.state;
 
-  // useEffect(() => {
-  //   console.log("song  change? ", songChanged_Context.songChange);
-  //   if (
-  //     songAudioElement_Context.songAudioElement &&
-  //     songChanged_Context.songChanged
-  //   ) {
-  //     songAudioElement_Context.songAudioElement
-  //       .play()
-  //       .then()
-  //       .catch((err) => console.log("ERROR IS HERE", err));
-  //     console.log("PLAYING");
-  //     songChanged_Context.setSongChanged(false);
-  //   }
-  // }, [songChanged_Context.songChanged]);
-
   let handleClick = (e) => {
     // setting song and album name
     playBtnClicked(track, e);
@@ -59,7 +44,7 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
     else {
       if (songAudioElement_Context.songAudioElement) {
         songAudioElement_Context.songAudioElement.pause();
-        console.log("PAUSE not the curSong ");
+        // console.log("PAUSE not the curSong ");
       }
 
       songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
