@@ -16,24 +16,43 @@ export default function Table({ data, headers, filterTxt }) {
     songName_Context,
     albumName_Context,
     songDuration_Context,
-    nextSong_Context,
     songAudioElement_Context,
     songChanged_Context,
     play_Context,
+    nextSong_Context,
+    prevSong_Context,
   } = AppContext();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
+    console.log("track is clicked ", track.name);
+
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
     songDuration_Context.setSongDuration(track.duration);
-    // setting the next song details
-    if (play_Context.play.state) {
+
+    // setting the next and prev song details
+
+    let prevSongElement =
+      e.target.parentNode.parentNode.previousSibling?.childNodes[0]
+        .childNodes[0];
+    let nextSongElement =
+      e.target.parentNode.parentNode.nextSibling?.childNodes[0].childNodes[0];
+
+    console.log("PREV IS ", prevSongElement);
+    console.log("NXT IS ", nextSongElement);
+
+    if (nextSongElement) {
+      // console.log("nxt song ID  ", nextSongElement);
       nextSong_Context.setNextSong({
-        id:
-          e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
-            .childNodes[0].id,
+        id: nextSongElement.id,
+      });
+    }
+    if (prevSongElement) {
+      // console.log("prv song ID  ", prevSongElement);
+      prevSong_Context.setPrevSong({
+        id: prevSongElement.id,
       });
     }
   };

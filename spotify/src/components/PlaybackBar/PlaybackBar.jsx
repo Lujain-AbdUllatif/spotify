@@ -31,6 +31,8 @@ export default function PlayBackBar() {
     play_Context,
     songAudioElement_Context,
     songDuration_Context,
+    nextSong_Context,
+    prevSong_Context,
   } = AppContext();
 
   // TOTAL
@@ -53,6 +55,24 @@ export default function PlayBackBar() {
         ...play_Context.play,
         state: !play_Context.play.state,
       });
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (prevSong_Context.prevSong?.id) {
+      let prevSongBtn = document.getElementById(
+        `${prevSong_Context.prevSong.id}`
+      );
+      prevSongBtn.click();
+    }
+  };
+
+  const handleNextClick = () => {
+    if (nextSong_Context.nextSong?.id) {
+      let nextSongBtn = document.getElementById(
+        `${nextSong_Context.nextSong.id}`
+      );
+      nextSongBtn.click();
     }
   };
 
@@ -79,13 +99,23 @@ export default function PlayBackBar() {
       <div className="playback-bar-center">
         <div className="playback-bar-center-btns">
           {/* PREVIOUS SONG */}
-          <button>{prevIcon}</button>
+          <button
+            onClick={handlePrevClick}
+            disabled={!prevSong_Context.prevSong}
+          >
+            {prevIcon}
+          </button>
           {/* PLAY\PAUSE */}
           <button onClick={handlePlayClick}>
             {play_Context.play.state ? playIcon : pauseIcon}
           </button>
           {/* NEXT SONG */}
-          <button>{nextIcon}</button>
+          <button
+            onClick={handleNextClick}
+            disabled={!nextSong_Context.nextSong}
+          >
+            {nextIcon}
+          </button>
         </div>
         {/* PROGRESS BAR */}
         <div className="playback-bar-center-progress-bar">

@@ -21,6 +21,7 @@ export const SongAudioElementContext = React.createContext();
 export const SongDurationContext = React.createContext();
 export const SongChangedContext = React.createContext();
 export const NextSongContext = React.createContext();
+export const PrevSongContext = React.createContext();
 
 function App() {
   // Context States
@@ -32,6 +33,7 @@ function App() {
   const [songDuration, setSongDuration] = React.useState();
   const [songChanged, setSongChanged] = React.useState(false);
   const [nextSong, setNextSong] = React.useState();
+  const [prevSong, setPrevSong] = React.useState();
 
   return (
     <div>
@@ -60,9 +62,16 @@ function App() {
                           setNextSong,
                         }}
                       >
-                        {/**********/}
-                        <PlaybackBar />
-                        {/**********/}
+                        <PrevSongContext.Provider
+                          value={{
+                            prevSong,
+                            setPrevSong,
+                          }}
+                        >
+                          {/**********/}
+                          <PlaybackBar />
+                          {/**********/}
+                        </PrevSongContext.Provider>
                       </NextSongContext.Provider>
                     </SongChangedContext.Provider>
                   </SongDurationContext.Provider>
@@ -104,9 +113,16 @@ function App() {
                               setNextSong,
                             }}
                           >
-                            {/**********/}
-                            <PlaylistPage />
-                            {/**********/}
+                            <PrevSongContext.Provider
+                              value={{
+                                prevSong,
+                                setPrevSong,
+                              }}
+                            >
+                              {/**********/}
+                              <PlaylistPage />
+                              {/**********/}
+                            </PrevSongContext.Provider>
                           </NextSongContext.Provider>
                         </SongChangedContext.Provider>
                       </SongDurationContext.Provider>
