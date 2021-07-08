@@ -19,6 +19,7 @@ export default function Table({ data, headers, filterTxt }) {
     nextSong_Context,
     songAudioElement_Context,
     songChanged_Context,
+    play_Context,
   } = AppContext();
 
   // playBtnClicked
@@ -28,15 +29,13 @@ export default function Table({ data, headers, filterTxt }) {
     albumName_Context.setAlbumName(track.album_name);
     songDuration_Context.setSongDuration(track.duration);
     // setting the next song details
-    const nextSongDetails =
-      e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
-        .childNodes[0].dataset;
-    nextSong_Context.setNextSong({
-      id:
-        e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
-          .childNodes[0].id,
-      ...nextSongDetails,
-    });
+    if (play_Context.play.state) {
+      nextSong_Context.setNextSong({
+        id:
+          e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
+            .childNodes[0].id,
+      });
+    }
   };
 
   // USE EFFECT FOR PLAYING A SONG
@@ -51,6 +50,19 @@ export default function Table({ data, headers, filterTxt }) {
         .catch((err) => console.log("ERROR IS HERE", err));
       // console.log("PLAYING USE-EFFECT");
       songChanged_Context.setSongChanged(false);
+
+      songAudioElement_Context.songAudioElement.addEventListener(
+        "ended",
+        () => {
+          if (nextSong_Context.nextSong.id) {
+            let nextSongBtn = document.getElementById(
+              `${nextSong_Context.nextSong.id}`
+            );
+
+            nextSongBtn.click();
+          }
+        }
+      );
     }
   }, [songAudioElement_Context.songAudioElement]);
 

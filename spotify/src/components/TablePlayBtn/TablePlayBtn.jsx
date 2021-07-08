@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // ICONS
 import playIcon from "../../assets/play_line_icon.png";
