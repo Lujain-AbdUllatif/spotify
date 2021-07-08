@@ -8,9 +8,12 @@ import "./carousel.css";
 
 export default function Carousel({ title, data }) {
   // States
-  let [arrow, setArrow] = React.useState(false);
-  let [disBtn, setDisBtn] = React.useState(false);
-  let [greyBtn, setGreyBtn] = React.useState(false);
+  const [greyState, setGreyState] = React.useState({
+    arrow: false,
+    disBtn: false,
+    greyBtn: false,
+  });
+  const { arrow, disBtn, greyBtn } = greyState;
 
   if (!data)
     return (
@@ -21,20 +24,22 @@ export default function Carousel({ title, data }) {
       </div>
     );
 
-  let playLists = data.playlists.map((a) => {
-    return <PlayList data={a}></PlayList>;
+  let playLists = data.playlists?.map((playlistData) => {
+    return (
+      <PlayList data={playlistData} key={playlistData.playlist_id}></PlayList>
+    );
   });
 
   // Click Handler
   let handleRightClick = () => {
-    setArrow(true);
-    setDisBtn(true);
-    setGreyBtn(true);
+    setGreyState(() => {
+      return { arrow: true, disBtn: true, greyBtn: true };
+    });
   };
   let handleLeftClick = () => {
-    setArrow(false);
-    setDisBtn(false);
-    setGreyBtn(false);
+    setGreyState(() => {
+      return { arrow: false, disBtn: false, greyBtn: false };
+    });
   };
 
   return (
@@ -47,23 +52,23 @@ export default function Carousel({ title, data }) {
             onClick={handleLeftClick}
             disabled={!disBtn}
           >
-            <i class="fas fa-chevron-left"></i>
+            <i className="fas fa-chevron-left"></i>
           </button>
           <button
             className={`carousel-btn ${greyBtn ? "carousel-grey-btn" : ""}`}
             onClick={handleRightClick}
             disabled={disBtn}
           >
-            <i class="fas fa-chevron-right"></i>
+            <i className="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>
       <div className="carousel-playlists">
         <div className={`carousel-1st ${arrow ? "carousel-disappear" : ""}`}>
-          {playLists.slice(0, 5)}
+          {playLists?.slice(0, 5)}
         </div>
         <div className={`carousel-2nd ${arrow ? "" : "carousel-disappear"}`}>
-          {playLists.slice(5, 10)}
+          {playLists?.slice(5, 10)}
         </div>
       </div>
     </div>

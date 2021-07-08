@@ -31,10 +31,12 @@ export default function Home() {
         ) : (
           ""
         )}
+
         <Carousel
           title="Featured playlists"
           data={featuredPlaylistsData}
         ></Carousel>
+
         <Carousel title="Mood" data={moodData}></Carousel>
       </div>
     </div>

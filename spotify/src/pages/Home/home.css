@@ -4,6 +4,13 @@
   margin-bottom: 100px;
 }
 
+@media screen and (max-width: 1175px) {
+  .home-container {
+    width: fit-content;
+    height: 100vh;
+  }
+}
+
 .home-div {
   margin-left: 270px;
 }

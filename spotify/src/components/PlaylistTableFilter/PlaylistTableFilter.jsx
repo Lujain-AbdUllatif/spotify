@@ -11,7 +11,7 @@ export default function PlaylistTableFilter({ fun }) {
   return (
     <div className="playlist-table-filter-bar">
       <span className="playlist-table-filter-icon">
-        <i class="fas fa-search"></i>
+        <i className="fas fa-search"></i>
       </span>
       <input
         type="text"

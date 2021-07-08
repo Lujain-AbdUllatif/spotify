@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // API
@@ -10,24 +10,25 @@ import PlaylistTableFilter from "../../components/PlaylistTableFilter/PlaylistTa
 import Table from "../../components/Table/Table";
 
 // Context
-import { PlaylistImgContext } from "../../App";
+import AppContext from "../../contextCustomHooks";
 
 // CSS
 import "./playlistPage.css";
 
 export default function PlaylistPage() {
-  let history = useHistory();
   // Table States
   let [duration, setDuration] = React.useState();
   let [tracksNum, setTracksNum] = React.useState();
   let [tracks, setTracks] = React.useState();
   let [txtValue, setTxtValue] = React.useState();
 
+  let history = useHistory();
+
   // Context Hooks
-  const playlistImg_Context = useContext(PlaylistImgContext);
-  playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
+  const { playlistImg_Context } = AppContext();
 
   useEffect(() => {
+    playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
     // Fetching playlist data
     playlistSongs(history.location.state.data.playlist_id).then((data) => {
       // Setting States for the table
@@ -53,13 +54,7 @@ export default function PlaylistPage() {
         <PlaylistTableFilter fun={setTxtValue}></PlaylistTableFilter>
         {/* TABLE */}
         {tracks ? (
-          <Table
-            data={tracks}
-            headers={headers}
-            filterTxt={txtValue}
-            // setSongName={setSongName}
-            // setAlbumName={setAlbumName}
-          ></Table>
+          <Table data={tracks} headers={headers} filterTxt={txtValue}></Table>
         ) : (
           ""
         )}

@@ -1,25 +1,70 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useEffect } from "react";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
 import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 
 // Context
-import { SongNameContext, AlbumNameContext } from "../../App";
+import AppContext from "../../contextCustomHooks";
 
 // CSS
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt }) {
   // Context Hooks
-  const songName_Context = useContext(SongNameContext);
-  const albumName_Context = useContext(AlbumNameContext);
+  const {
+    songName_Context,
+    albumName_Context,
+    songDuration_Context,
+    nextSong_Context,
+    songAudioElement_Context,
+    songChanged_Context,
+    play_Context,
+  } = AppContext();
 
   // playBtnClicked
-  const playBtnClicked = (track) => {
+  const playBtnClicked = (track, e) => {
+    // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
+    songDuration_Context.setSongDuration(track.duration);
+    // setting the next song details
+    if (play_Context.play.state) {
+      nextSong_Context.setNextSong({
+        id:
+          e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
+            .childNodes[0].id,
+      });
+    }
   };
+
+  // USE EFFECT FOR PLAYING A SONG
+  useEffect(() => {
+    if (
+      songAudioElement_Context.songAudioElement &&
+      songChanged_Context.songChanged
+    ) {
+      songAudioElement_Context.songAudioElement
+        .play()
+        .then()
+        .catch((err) => console.log("ERROR IS HERE", err));
+      // console.log("PLAYING USE-EFFECT");
+      songChanged_Context.setSongChanged(false);
+
+      songAudioElement_Context.songAudioElement.addEventListener(
+        "ended",
+        () => {
+          if (nextSong_Context.nextSong.id) {
+            let nextSongBtn = document.getElementById(
+              `${nextSong_Context.nextSong.id}`
+            );
+
+            nextSongBtn.click();
+          }
+        }
+      );
+    }
+  }, [songAudioElement_Context.songAudioElement]);
 
   // Filtering Data
   let filteredData;
@@ -47,37 +92,50 @@ export default function Table({ data, headers, filterTxt }) {
     return <p className="table-not-found">track not found &#128533;</p>;
 
   return (
+    /***TABLE***/
     <table className="table">
-      <tr>
-        <th className="table-header-play-btn"></th>
-        {headersMemo.map((header) => {
-          return <th className="table-header">{header}</th>;
+      <tbody>
+        {/**** HEADERS ****/}
+        <tr>
+          <th className="table-header-play-btn"></th>
+          {headersMemo.map((header) => {
+            return (
+              <th className="table-header" key={header.slice(0, 2)}>
+                {header}
+              </th>
+            );
+          })}
+          <th className="table-header-play-btn-extentions"></th>
+        </tr>
+        {finalTracks.map((track) => {
+          return (
+            /**** ROWS ****/
+            <tr className="table-row" key={track.track_id}>
+              <td className="table-data-play-btn">
+                <TablePlayBtn
+                  id={track.track_id}
+                  track={track}
+                  playBtnClicked={playBtnClicked}
+                />
+              </td>
+              <td className="table-data table-data-like-btn">
+                <LikeBtn value={Boolean(Math.round(Math.random()))} />
+              </td>
+              <td className="table-data" id="song-name">
+                {track.name}
+              </td>
+              <td className="table-data" id="artist-name">
+                {track.artists_names}
+              </td>
+              <td className="table-data" id="album-name">
+                {track.album_name}
+              </td>
+              <td className="table-data">{track.release_date}</td>
+              <td className="table-data-play-btn-extention"></td>
+            </tr>
+          );
         })}
-        <th className="table-header-play-btn-extentions"></th>
-      </tr>
-      {finalTracks.map((track) => {
-        return (
-          <tr className="table-row">
-            <td className="table-data-play-btn">
-              <TablePlayBtn track={track} playBtnClicked={playBtnClicked} />
-            </td>
-            <td className="table-data table-data-like-btn">
-              <LikeBtn value={Boolean(Math.round(Math.random()))} />
-            </td>
-            <td className="table-data" id="song-name">
-              {track.name}
-            </td>
-            <td className="table-data" id="artist-name">
-              {track.artists_names}
-            </td>
-            <td className="table-data" id="album-name">
-              {track.album_name}
-            </td>
-            <td className="table-data">{track.release_date}</td>
-            <td className="table-data-play-btn-extention"></td>
-          </tr>
-        );
-      })}
+      </tbody>
     </table>
   );
 }
