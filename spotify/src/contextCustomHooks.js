@@ -9,6 +9,7 @@ import {
   SongChangedContext,
   NextSongContext,
   PrevSongContext,
+  VolumeContext,
 } from "./App";
 
 const AppContext = () => {
@@ -21,6 +22,7 @@ const AppContext = () => {
   const songChanged_Context = useContext(SongChangedContext);
   const nextSong_Context = useContext(NextSongContext);
   const prevSong_Context = useContext(PrevSongContext);
+  const volume_Context = useContext(VolumeContext);
   return {
     songName_Context,
     albumName_Context,
@@ -31,6 +33,7 @@ const AppContext = () => {
     songChanged_Context,
     nextSong_Context,
     prevSong_Context,
+    volume_Context,
   };
 };
 

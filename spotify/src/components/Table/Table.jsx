@@ -18,15 +18,13 @@ export default function Table({ data, headers, filterTxt }) {
     songDuration_Context,
     songAudioElement_Context,
     songChanged_Context,
-    play_Context,
     nextSong_Context,
     prevSong_Context,
+    volume_Context,
   } = AppContext();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
-    console.log("track is clicked ", track.name);
-
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
@@ -40,19 +38,24 @@ export default function Table({ data, headers, filterTxt }) {
     let nextSongElement =
       e.target.parentNode.parentNode.nextSibling?.childNodes[0].childNodes[0];
 
-    console.log("PREV IS ", prevSongElement);
-    console.log("NXT IS ", nextSongElement);
-
     if (nextSongElement) {
       // console.log("nxt song ID  ", nextSongElement);
       nextSong_Context.setNextSong({
         id: nextSongElement.id,
+      });
+    } else {
+      nextSong_Context.setNextSong({
+        id: undefined,
       });
     }
     if (prevSongElement) {
       // console.log("prv song ID  ", prevSongElement);
       prevSong_Context.setPrevSong({
         id: prevSongElement.id,
+      });
+    } else {
+      prevSong_Context.setPrevSong({
+        id: undefined,
       });
     }
   };
@@ -69,6 +72,11 @@ export default function Table({ data, headers, filterTxt }) {
         .catch((err) => console.log("ERROR IS HERE", err));
       // console.log("PLAYING USE-EFFECT");
       songChanged_Context.setSongChanged(false);
+      // volume settings
+      if (volume_Context.volume) {
+        songAudioElement_Context.songAudioElement.volume =
+          volume_Context.volume / 100;
+      }
 
       songAudioElement_Context.songAudioElement.addEventListener(
         "ended",
