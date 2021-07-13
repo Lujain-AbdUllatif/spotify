@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 // ICONS
 import playIcon from "../../assets/play_line_icon.png";
@@ -33,6 +33,7 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
     //play when the clicked song is already the current song
     if (curSong) {
       songAudioElement_Context.songAudioElement.play();
+
       // console.log("PLAYING curSong");
     }
     // pause if the playing song is the clicked song

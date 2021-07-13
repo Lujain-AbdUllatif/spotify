@@ -16,10 +16,11 @@ export default function Table({ data, headers, filterTxt }) {
     songName_Context,
     albumName_Context,
     songDuration_Context,
-    nextSong_Context,
     songAudioElement_Context,
     songChanged_Context,
-    play_Context,
+    nextSong_Context,
+    prevSong_Context,
+    volume_Context,
   } = AppContext();
 
   // playBtnClicked
@@ -28,12 +29,33 @@ export default function Table({ data, headers, filterTxt }) {
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
     songDuration_Context.setSongDuration(track.duration);
-    // setting the next song details
-    if (play_Context.play.state) {
+
+    // setting the next and prev song details
+
+    let prevSongElement =
+      e.target.parentNode.parentNode.previousSibling?.childNodes[0]
+        .childNodes[0];
+    let nextSongElement =
+      e.target.parentNode.parentNode.nextSibling?.childNodes[0].childNodes[0];
+
+    if (nextSongElement) {
+      // console.log("nxt song ID  ", nextSongElement);
       nextSong_Context.setNextSong({
-        id:
-          e.target.parentNode.parentNode.parentNode.nextSibling.childNodes[0]
-            .childNodes[0].id,
+        id: nextSongElement.id,
+      });
+    } else {
+      nextSong_Context.setNextSong({
+        id: undefined,
+      });
+    }
+    if (prevSongElement) {
+      // console.log("prv song ID  ", prevSongElement);
+      prevSong_Context.setPrevSong({
+        id: prevSongElement.id,
+      });
+    } else {
+      prevSong_Context.setPrevSong({
+        id: undefined,
       });
     }
   };
@@ -50,6 +72,11 @@ export default function Table({ data, headers, filterTxt }) {
         .catch((err) => console.log("ERROR IS HERE", err));
       // console.log("PLAYING USE-EFFECT");
       songChanged_Context.setSongChanged(false);
+      // volume settings
+      if (volume_Context.volume) {
+        songAudioElement_Context.songAudioElement.volume =
+          volume_Context.volume / 100;
+      }
 
       songAudioElement_Context.songAudioElement.addEventListener(
         "ended",

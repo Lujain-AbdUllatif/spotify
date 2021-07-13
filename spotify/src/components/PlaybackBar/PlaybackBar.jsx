@@ -31,6 +31,9 @@ export default function PlayBackBar() {
     play_Context,
     songAudioElement_Context,
     songDuration_Context,
+    nextSong_Context,
+    prevSong_Context,
+    volume_Context,
   } = AppContext();
 
   // TOTAL
@@ -53,6 +56,31 @@ export default function PlayBackBar() {
         ...play_Context.play,
         state: !play_Context.play.state,
       });
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (prevSong_Context.prevSong?.id) {
+      let prevSongBtn = document.getElementById(
+        `${prevSong_Context.prevSong.id}`
+      );
+      prevSongBtn.click();
+    }
+  };
+
+  const handleNextClick = () => {
+    if (nextSong_Context.nextSong?.id) {
+      let nextSongBtn = document.getElementById(
+        `${nextSong_Context.nextSong.id}`
+      );
+      nextSongBtn.click();
+    }
+  };
+
+  const handleVolChange = (e) => {
+    if (songAudioElement_Context.songAudioElement) {
+      songAudioElement_Context.songAudioElement.volume = e.target.value / 100;
+      volume_Context.setVolume(e.target.value);
     }
   };
 
@@ -79,13 +107,25 @@ export default function PlayBackBar() {
       <div className="playback-bar-center">
         <div className="playback-bar-center-btns">
           {/* PREVIOUS SONG */}
-          <button>{prevIcon}</button>
+          <button
+            onClick={handlePrevClick}
+            disabled={!prevSong_Context.prevSong}
+            style={prevSong_Context.prevSong?.id ? {} : { color: "#c4c4c4" }}
+          >
+            {prevIcon}
+          </button>
           {/* PLAY\PAUSE */}
           <button onClick={handlePlayClick}>
             {play_Context.play.state ? playIcon : pauseIcon}
           </button>
           {/* NEXT SONG */}
-          <button>{nextIcon}</button>
+          <button
+            onClick={handleNextClick}
+            disabled={!nextSong_Context.nextSong}
+            style={nextSong_Context.nextSong?.id ? {} : { color: "#c4c4c4" }}
+          >
+            {nextIcon}
+          </button>
         </div>
         {/* PROGRESS BAR */}
         <div className="playback-bar-center-progress-bar">
@@ -102,7 +142,12 @@ export default function PlayBackBar() {
       {/* RIGHT */}
       <div className="playback-bar-right">
         <img src={volumeIcon} alt="volume icon" />
-        <input type="range" className="playback-bar-right-volume" />
+        <input
+          type="range"
+          className="playback-bar-right-volume"
+          onChange={handleVolChange}
+          defaultValue={100}
+        />
       </div>
     </div>
   );
