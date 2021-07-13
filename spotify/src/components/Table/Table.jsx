@@ -146,7 +146,7 @@ export default function Table({ data, headers, filterTxt }) {
                 />
               </td>
               <td className="table-data table-data-like-btn">
-                <LikeBtn value={Boolean(Math.round(Math.random()))} />
+                <LikeBtn value={track.is_liked} id={track.track_id} />
               </td>
               <td className="table-data" id="song-name">
                 {track.name}

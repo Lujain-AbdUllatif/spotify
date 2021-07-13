@@ -17,7 +17,7 @@ export default function PlaylistHeader({ data, duration, tracksNum }) {
     >
       <div className="playlist-page-title-description">
         <h3>{name}</h3>
-        <p>{description}</p>
+        <p>{description ? description : ""}</p>
       </div>
       <div className="playlist-page-length-duration">
         <h3>{tracksNum} songs</h3>

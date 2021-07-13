@@ -22,8 +22,6 @@ export default function PlaylistPage() {
   let [tracks, setTracks] = React.useState();
   let [txtValue, setTxtValue] = React.useState();
 
-  console.log("Testing tracks ", tracks);
-
   let history = useHistory();
 
   // Context Hooks
