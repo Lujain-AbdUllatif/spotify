@@ -12,9 +12,6 @@ import AppContext from "../../contextCustomHooks";
 // Assets Functions
 import { sec2min } from "../../assetesFunctions";
 
-// liked songs img
-import liked_songs from "../../assets/liked_songs.jpg";
-
 // ICONS
 import volumeIcon from "../../assets/volume.png";
 const prevIcon = <i className="fas fa-step-backward"></i>;

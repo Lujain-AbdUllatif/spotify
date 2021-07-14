@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
@@ -6,6 +7,9 @@ import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 
 // Context
 import AppContext from "../../contextCustomHooks";
+
+// liked songs image
+import likedSongsImg from "../../assets/liked_songs.jpg";
 
 // CSS
 import "./table.css";
@@ -21,10 +25,16 @@ export default function Table({ data, headers, filterTxt }) {
     nextSong_Context,
     prevSong_Context,
     volume_Context,
+    playlistImg_Context,
   } = AppContext();
+
+  // history
+  const history = useHistory();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
+    if (history.location.pathname === "/liked-songs")
+      playlistImg_Context.setPlaylistImg(likedSongsImg);
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
