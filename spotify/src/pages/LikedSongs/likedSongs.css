@@ -1,7 +1,10 @@
 .liked-songs-container {
-  height: 100vh;
   background-color: rgba(29, 185, 84, 0.15);
+  min-height: 130vh;
   margin-bottom: 100px;
+  margin-left: 270px;
+  padding-bottom: 50px;
+  min-width: fit-content;
 }
 
 .liked-songs-div {
