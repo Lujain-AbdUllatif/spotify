@@ -11,22 +11,40 @@ import likedSongs from "../../API/likedSongs";
 // liked songs image
 import likedSongsImg from "../../assets/liked_songs.jpg";
 
+// Contexts
+import AppContext from "../../contextCustomHooks";
+
 // CSS
 import "./likedSongs.css";
 
 export default function LikedSongs() {
+  // States
+  const [data, setData] = React.useState();
+
+  AppContext();
+
   const headerData = { name: "Liked Songs", image_url: likedSongsImg };
   useEffect(() => {
     likedSongs().then((data) => {
-      console.log("liked songs data  ", data);
+      setData(data.liked_tracks);
     });
   }, []);
 
+  // Table headers
+  const headers = ["", "TITLE", "ARTIST", "ALBUM", "REALEASE DATE"];
+
   return (
     <div className="liked-songs-container">
-      <PlaylistHeader data={headerData}></PlaylistHeader>
-      {/* <PlaylistTableFilter></PlaylistTableFilter>
-      <Table></Table> */}
+      {data ? (
+        <PlaylistHeader
+          data={headerData}
+          tracksNum={data.length}
+        ></PlaylistHeader>
+      ) : (
+        ""
+      )}
+      <PlaylistTableFilter></PlaylistTableFilter>
+      {data ? <Table headers={headers} data={data}></Table> : ""}
     </div>
   );
 }
