@@ -3,7 +3,7 @@ const access_token_headers = {
 };
 
 export default function playlistSongs(playlistId) {
-  return fetch(`http://api.sprintt.co/spotify/playlist_tracks/${playlistId}`, {
+  return fetch(`https://api.sprintt.co/spotify/playlist_tracks/${playlistId}`, {
     headers: access_token_headers,
   })
     .then((response) => response.json())

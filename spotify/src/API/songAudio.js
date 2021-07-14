@@ -10,5 +10,5 @@ const getEncryptedToken = (token) => {
 const access_token_encrypted = getEncryptedToken(access_token);
 
 export default function songAudio(song_id) {
-  return `http://api.sprintt.co/spotify/play/${song_id}?access=${access_token_encrypted}`;
+  return `https://api.sprintt.co/spotify/play/${song_id}?access=${access_token_encrypted}`;
 }
