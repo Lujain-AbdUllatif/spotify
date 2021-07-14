@@ -11,17 +11,12 @@ import likedSongs from "../../API/likedSongs";
 // liked songs image
 import likedSongsImg from "../../assets/liked_songs.jpg";
 
-// Contexts
-import AppContext from "../../contextCustomHooks";
-
 // CSS
 import "./likedSongs.css";
 
 export default function LikedSongs() {
   // States
   const [data, setData] = React.useState();
-
-  AppContext();
 
   const headerData = { name: "Liked Songs", image_url: likedSongsImg };
   useEffect(() => {

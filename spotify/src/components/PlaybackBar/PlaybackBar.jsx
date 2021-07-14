@@ -12,9 +12,6 @@ import AppContext from "../../contextCustomHooks";
 // Assets Functions
 import { sec2min } from "../../assetesFunctions";
 
-// liked songs img
-import liked_songs from "../../assets/liked_songs.jpg";
-
 // ICONS
 import volumeIcon from "../../assets/volume.png";
 const prevIcon = <i className="fas fa-step-backward"></i>;
@@ -93,11 +90,7 @@ export default function PlayBackBar() {
       <div className="playback-bar-left">
         {songName_Context.songName ? (
           <img
-            src={
-              playlistImg_Context.playlistImg
-                ? playlistImg_Context.playlistImg
-                : liked_songs
-            }
+            src={playlistImg_Context.playlistImg}
             className="playback-bar-left-img"
             alt="playlist cover"
           />
