@@ -93,11 +93,7 @@ export default function PlayBackBar() {
       <div className="playback-bar-left">
         {songName_Context.songName ? (
           <img
-            src={
-              playlistImg_Context.playlistImg
-                ? playlistImg_Context.playlistImg
-                : liked_songs
-            }
+            src={playlistImg_Context.playlistImg}
             className="playback-bar-left-img"
             alt="playlist cover"
           />

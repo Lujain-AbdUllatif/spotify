@@ -21,10 +21,11 @@ export default function LikedSongs() {
   // States
   const [data, setData] = React.useState();
 
-  AppContext();
+  const { playlistImg_Context } = AppContext();
 
   const headerData = { name: "Liked Songs", image_url: likedSongsImg };
   useEffect(() => {
+    playlistImg_Context.setPlaylistImg(likedSongsImg);
     likedSongs().then((data) => {
       setData(data.liked_tracks);
     });
