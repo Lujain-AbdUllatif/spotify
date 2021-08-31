@@ -48,30 +48,39 @@ export default function PlayList({ data }) {
   };
 
   const handleBtnClick = (e) => {
-    albumName_Context.setAlbumName(name);
-    playlistImg_Context.setPlaylistImg(image_url);
+    // if it is Indeed the curPlaylist then pause the whatever is playing
+    curPlaylist = playlist_id === play_Context.play.nowPlayingPlaylist;
 
-    playlistSongs(playlist_id).then((data) => {
-      // console.log("ALL DATA ", data);
-      // console.log("fetched songs::: ", data.tracks);
-
-      playlistTracks_Context.setPlaylistTracks({
-        tracks: data.tracks,
-        tracks_num: data.playlist_tracks,
-      });
-
-      playlistIdI_Context.setPlaylistIdI(buildPlaylistIdI(data.tracks));
-
+    if (curPlaylist) {
       play_Context.setPlay((prev) => {
-        return {
-          state: false,
-          nowPlayingPlaylist: playlist_id,
-          song_id: data.tracks[0].track_id,
-        };
+        return { ...prev, state: !prev.state };
       });
+    } else {
+      albumName_Context.setAlbumName(name);
+      playlistImg_Context.setPlaylistImg(image_url);
 
-      songName_Context.setSongName(data.tracks[0].name);
-    });
+      playlistSongs(playlist_id).then((data) => {
+        // console.log("ALL DATA ", data);
+        // console.log("fetched songs::: ", data.tracks);
+
+        playlistTracks_Context.setPlaylistTracks({
+          tracks: data.tracks,
+          tracks_num: data.playlist_tracks,
+        });
+
+        playlistIdI_Context.setPlaylistIdI(buildPlaylistIdI(data.tracks));
+
+        play_Context.setPlay((prev) => {
+          return {
+            state: false,
+            nowPlayingPlaylist: playlist_id,
+            song_id: data.tracks[0].track_id,
+          };
+        });
+
+        songName_Context.setSongName(data.tracks[0].name);
+      });
+    }
   };
 
   return (

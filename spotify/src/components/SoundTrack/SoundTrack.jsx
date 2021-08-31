@@ -36,17 +36,19 @@ export default function SoundPBB() {
     // if the song is changed then set the url and the num
     if (songChanged) {
       let song_id = play_Context.play.song_id;
-      let song_index = playlistIdI_Context.playlistIdI[song_id];
-      let new_song_obj =
-        playlistTracks_Context.playlistTracks.tracks[song_index + 1];
-      let new_song_id = new_song_obj.track_id;
-
       console.log("<<<<<<<<<< CUR SONG ID >>>>>>>>>>", song_id);
-      console.log("<<<<<<<<<< CUR SONG INDEX >>>>>>>>>>", song_index);
-      console.log("<<<<<<<<<< NEXT SONG OBJECT >>>>>>>>>>", new_song_obj);
-      console.log("<<<<<<<<<< NEXT SONG ID >>>>>>>>>>", new_song_id);
 
-      setUrl(songAudio(new_song_id));
+      let song_index = playlistIdI_Context.playlistIdI[song_id];
+      console.log("<<<<<<<<<< CUR SONG INDEX >>>>>>>>>>", song_index);
+
+      // let new_song_obj =
+      //   playlistTracks_Context.playlistTracks.tracks[song_index + 1];
+      // console.log("<<<<<<<<<< NEXT SONG OBJECT >>>>>>>>>>", new_song_obj);
+
+      // let new_song_id = new_song_obj.track_id;
+      // console.log("<<<<<<<<<< NEXT SONG ID >>>>>>>>>>", new_song_id);
+
+      setUrl(songAudio(song_id));
       setNum((prev) => {
         return prev + 1;
       });
@@ -60,11 +62,11 @@ export default function SoundPBB() {
     songChanged,
   ]);
 
-  console.log(
-    "<<<<<<<<<< TRACKS NUM >>>>>>>>>>",
-    playlistTracks_Context.playlistTracks?.tracks_num
-  );
-  console.log("<<<<<<<<<< NUM >>>>>>>>>>", num);
+  // console.log(
+  //   "<<<<<<<<<< TRACKS NUM >>>>>>>>>>",
+  //   playlistTracks_Context.playlistTracks?.tracks_num
+  // );
+  // console.log("<<<<<<<<<< NUM >>>>>>>>>>", num);
 
   const handleFinishPlaying = () => {
     // current song details
@@ -77,10 +79,22 @@ export default function SoundPBB() {
         playlistTracks_Context.playlistTracks.tracks[song_index + 1];
       let new_song_id = new_song_obj.track_id;
 
-      // console.log("<<<<<<<<<< CUR SONG ID >>>>>>>>>>", song_id);
-      // console.log("<<<<<<<<<< CUR SONG INDEX >>>>>>>>>>", song_index);
-      // console.log("<<<<<<<<<< NEXT SONG OBJECT >>>>>>>>>>", new_song_obj);
-      // console.log("<<<<<<<<<< NEXT SONG ID >>>>>>>>>>", new_song_id);
+      console.log(
+        "//////////////////////// CUR SONG ID ////////////////////////",
+        song_id
+      );
+      console.log(
+        "//////////////////////// CUR SONG INDEX ////////////////////////",
+        song_index
+      );
+      console.log(
+        "//////////////////////// NEXT SONG OBJECT ////////////////////////",
+        new_song_obj
+      );
+      console.log(
+        "//////////////////////// NEXT SONG ID ////////////////////////",
+        new_song_id
+      );
 
       play_Context.setPlay((prev) => {
         return { ...prev, song_id: new_song_id };

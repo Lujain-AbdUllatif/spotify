@@ -63,9 +63,9 @@ export default function TablePlayBtn({
         tracks_num: playlistData.playlist_tracks,
       });
 
-      playlistImg_Context.setPlaylistImg(playlistData.image_url);
-
       playlistIdI_Context.setPlaylistIdI(buildPlaylistIdI(playlistData.tracks));
+
+      playlistImg_Context.setPlaylistImg(playlistData.image_url);
     }
   };
 
