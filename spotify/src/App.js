@@ -23,19 +23,26 @@ export const SongChangedContext = React.createContext();
 export const NextSongContext = React.createContext();
 export const PrevSongContext = React.createContext();
 export const VolumeContext = React.createContext();
+export const PlaylistTracks = React.createContext();
+export const PlaylistIdI = React.createContext();
 
 function App() {
   // Context States
   const [songName, setSongName] = React.useState();
   const [albumName, setAlbumName] = React.useState();
   const [playlistImg, setPlaylistImg] = React.useState();
-  const [play, setPlay] = React.useState({ state: true, nowPlaying: null });
+  const [play, setPlay] = React.useState({
+    state: true,
+    nowPlayingPlaylist: null,
+  });
   const [songAudioElement, setSongAudioElement] = React.useState();
   const [songDuration, setSongDuration] = React.useState();
   const [songChanged, setSongChanged] = React.useState(false);
   const [nextSong, setNextSong] = React.useState();
   const [prevSong, setPrevSong] = React.useState();
   const [volume, setVolume] = React.useState();
+  const [playlistTracks, setPlaylistTracks] = React.useState();
+  const [playlistIdI, setPlaylistIdI] = React.useState();
 
   return (
     <div>
@@ -76,9 +83,17 @@ function App() {
                               setVolume,
                             }}
                           >
-                            {/**********/}
-                            <PlaybackBar />
-                            {/**********/}
+                            <PlaylistTracks.Provider
+                              value={{ playlistTracks, setPlaylistTracks }}
+                            >
+                              <PlaylistIdI.Provider
+                                value={{ playlistIdI, setPlaylistIdI }}
+                              >
+                                {/**********/}
+                                <PlaybackBar />
+                                {/**********/}
+                              </PlaylistIdI.Provider>
+                            </PlaylistTracks.Provider>
                           </VolumeContext.Provider>
                         </PrevSongContext.Provider>
                       </NextSongContext.Provider>
@@ -91,61 +106,41 @@ function App() {
         </SongNameContext.Provider>
         {/* ROUTES */}
         <Switch>
+          {/* HOME */}
           <Route exact path="/">
-            <Home />
+            <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
+              <PlaylistImgContext.Provider
+                value={{ playlistImg, setPlaylistImg }}
+              >
+                <SongNameContext.Provider value={{ songName, setSongName }}>
+                  <PlaylistTracks.Provider
+                    value={{ playlistTracks, setPlaylistTracks }}
+                  >
+                    <SongAudioElementContext.Provider
+                      value={{ songAudioElement, setSongAudioElement }}
+                    >
+                      <PlayContext.Provider value={{ play, setPlay }}>
+                        <PlayContext.Provider value={{ play, setPlay }}>
+                          <PlaylistIdI.Provider
+                            value={{ playlistIdI, setPlaylistIdI }}
+                          >
+                            {/**********/}
+                            <Home />
+                            {/**********/}
+                          </PlaylistIdI.Provider>
+                        </PlayContext.Provider>
+                      </PlayContext.Provider>
+                    </SongAudioElementContext.Provider>
+                  </PlaylistTracks.Provider>
+                </SongNameContext.Provider>
+              </PlaylistImgContext.Provider>
+            </AlbumNameContext.Provider>
           </Route>
           <Route path="/browse">
             <Browse />
           </Route>
           <Route path="/liked-songs">
-            <SongAudioElementContext.Provider
-              value={{ songAudioElement, setSongAudioElement }}
-            >
-              <PlayContext.Provider value={{ play, setPlay }}>
-                <SongNameContext.Provider value={{ songName, setSongName }}>
-                  <AlbumNameContext.Provider
-                    value={{ albumName, setAlbumName }}
-                  >
-                    <PlaylistImgContext.Provider
-                      value={{ playlistImg, setPlaylistImg }}
-                    >
-                      <SongDurationContext.Provider
-                        value={{ songDuration, setSongDuration }}
-                      >
-                        <SongChangedContext.Provider
-                          value={{ songChanged, setSongChanged }}
-                        >
-                          <NextSongContext.Provider
-                            value={{
-                              nextSong,
-                              setNextSong,
-                            }}
-                          >
-                            <PrevSongContext.Provider
-                              value={{
-                                prevSong,
-                                setPrevSong,
-                              }}
-                            >
-                              <VolumeContext.Provider
-                                value={{
-                                  volume,
-                                  setVolume,
-                                }}
-                              >
-                                {/**********/}
-                                <LikedSongs />
-                                {/**********/}
-                              </VolumeContext.Provider>
-                            </PrevSongContext.Provider>
-                          </NextSongContext.Provider>
-                        </SongChangedContext.Provider>
-                      </SongDurationContext.Provider>
-                    </PlaylistImgContext.Provider>
-                  </AlbumNameContext.Provider>
-                </SongNameContext.Provider>
-              </PlayContext.Provider>
-            </SongAudioElementContext.Provider>
+            <LikedSongs />
           </Route>
           <Route path="/playlist">
             <SongNameContext.Provider value={{ songName, setSongName }}>
@@ -181,9 +176,17 @@ function App() {
                                   setVolume,
                                 }}
                               >
-                                {/**********/}
-                                <PlaylistPage />
-                                {/**********/}
+                                <PlaylistTracks.Provider
+                                  value={{ playlistTracks, setPlaylistTracks }}
+                                >
+                                  <PlaylistIdI.Provider
+                                    value={{ playlistIdI, setPlaylistIdI }}
+                                  >
+                                    {/**********/}
+                                    <PlaylistPage />
+                                    {/**********/}
+                                  </PlaylistIdI.Provider>
+                                </PlaylistTracks.Provider>
                               </VolumeContext.Provider>
                             </PrevSongContext.Provider>
                           </NextSongContext.Provider>

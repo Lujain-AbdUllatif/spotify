@@ -1,5 +1,4 @@
-import React, { useMemo, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useMemo } from "react";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
@@ -8,100 +7,24 @@ import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 // Context
 import AppContext from "../../contextCustomHooks";
 
-// liked songs image
-import likedSongsImg from "../../assets/liked_songs.jpg";
-
 // CSS
 import "./table.css";
 
-export default function Table({ data, headers, filterTxt }) {
+export default function Table({ data, headers, filterTxt, playlistData }) {
   // Context Hooks
   const {
     songName_Context,
     albumName_Context,
     songDuration_Context,
-    songAudioElement_Context,
-    songChanged_Context,
-    nextSong_Context,
-    prevSong_Context,
-    volume_Context,
-    playlistImg_Context,
   } = AppContext();
-
-  // history
-  const history = useHistory();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
-    if (history.location.pathname === "/liked-songs")
-      playlistImg_Context.setPlaylistImg(likedSongsImg);
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
     songDuration_Context.setSongDuration(track.duration);
-
-    // setting the next and prev song details
-
-    let prevSongElement =
-      e.target.parentNode.parentNode.previousSibling?.childNodes[0]
-        .childNodes[0];
-    let nextSongElement =
-      e.target.parentNode.parentNode.nextSibling?.childNodes[0].childNodes[0];
-
-    if (nextSongElement) {
-      // console.log("nxt song ID  ", nextSongElement);
-      nextSong_Context.setNextSong({
-        id: nextSongElement.id,
-      });
-    } else {
-      nextSong_Context.setNextSong({
-        id: undefined,
-      });
-    }
-    if (prevSongElement) {
-      // console.log("prv song ID  ", prevSongElement);
-      prevSong_Context.setPrevSong({
-        id: prevSongElement.id,
-      });
-    } else {
-      prevSong_Context.setPrevSong({
-        id: undefined,
-      });
-    }
   };
-
-  // USE EFFECT FOR PLAYING A SONG
-  useEffect(() => {
-    if (
-      songAudioElement_Context.songAudioElement &&
-      songChanged_Context.songChanged
-    ) {
-      songAudioElement_Context.songAudioElement
-        .play()
-        .then()
-        .catch((err) => console.log("ERROR IS HERE", err));
-      // console.log("PLAYING USE-EFFECT");
-      songChanged_Context.setSongChanged(false);
-      // volume settings
-      if (volume_Context.volume) {
-        songAudioElement_Context.songAudioElement.volume =
-          volume_Context.volume / 100;
-      }
-
-      songAudioElement_Context.songAudioElement.addEventListener(
-        "ended",
-        () => {
-          if (nextSong_Context.nextSong.id) {
-            let nextSongBtn = document.getElementById(
-              `${nextSong_Context.nextSong.id}`
-            );
-
-            nextSongBtn.click();
-          }
-        }
-      );
-    }
-  }, [songAudioElement_Context.songAudioElement]);
 
   // Filtering Data
   let filteredData;
@@ -153,10 +76,11 @@ export default function Table({ data, headers, filterTxt }) {
                   id={track.track_id}
                   track={track}
                   playBtnClicked={playBtnClicked}
+                  playlistData={playlistData}
                 />
               </td>
               <td className="table-data table-data-like-btn">
-                <LikeBtn value={track.is_liked} id={track.track_id} />
+                <LikeBtn value={Boolean(Math.round(Math.random()))} />
               </td>
               <td className="table-data" id="song-name">
                 {track.name}

@@ -4,21 +4,31 @@ import React from "react";
 import playIcon from "../../assets/play_line_icon.png";
 import pauseIcon from "../../assets/pause_line_icon.png";
 
-// Audio str
-import songAudio from "../../API/songAudio";
-
 // Context
 import AppContext from "../../contextCustomHooks";
+
+// Assets Functions
+import { buildPlaylistIdI } from "../../assetesFunctions";
 
 // CSS
 import "./tablePlayBtn.css";
 
-export default function TablePlayBtn({ track, playBtnClicked, id }) {
+// Sound
+import Sound from "react-sound";
+
+export default function TablePlayBtn({
+  track,
+  playBtnClicked,
+  id,
+  playlistData,
+}) {
   // Context Hook
   const {
     play_Context,
-    songAudioElement_Context,
-    songChanged_Context,
+    playlistImg_Context,
+    playlistIdI_Context,
+    playlistTracks_Context,
+
     // songDuration_Context,
   } = AppContext();
 
@@ -27,35 +37,36 @@ export default function TablePlayBtn({ track, playBtnClicked, id }) {
   let curSong = id === play_Context.play.song_id && play_Context.play.state;
 
   let handleClick = (e) => {
-    // setting song and album name
+    // setting contexts
     playBtnClicked(track, e);
 
     //play when the clicked song is already the current song
     if (curSong) {
-      songAudioElement_Context.songAudioElement.play();
-
-      // console.log("PLAYING curSong");
+      play_Context.setPlay((prev) => {
+        return { ...prev, state: !prev.state };
+      });
     }
     // pause if the playing song is the clicked song
     else if (curPlay) {
-      songAudioElement_Context.songAudioElement.pause();
-      // console.log("PAUSING curPlay");
+      play_Context.setPlay((prev) => {
+        return { ...prev, state: !prev.state };
+      });
     }
     // if neither then update the song (when the song state is updated the useEffect works to play it)
     else {
-      if (songAudioElement_Context.songAudioElement) {
-        songAudioElement_Context.songAudioElement.pause();
-        // console.log("PAUSE not the curSong ");
-      }
+      play_Context.setPlay((prev) => {
+        return { state: curSong || curPlay ? !prev.state : false, song_id: id };
+      });
 
-      songAudioElement_Context.setSongAudioElement(new Audio(songAudio(id)));
-      songChanged_Context.setSongChanged(true);
+      playlistTracks_Context.setPlaylistTracks({
+        tracks: playlistData.tracks,
+        tracks_num: playlistData.playlist_tracks,
+      });
+
+      playlistImg_Context.setPlaylistImg(playlistData.image_url);
+
+      playlistIdI_Context.setPlaylistIdI(buildPlaylistIdI(playlistData.tracks));
     }
-
-    // changing the play state
-    play_Context.setPlay((prev) => {
-      return { state: curSong || curPlay ? !prev.state : false, song_id: id };
-    });
   };
 
   return (

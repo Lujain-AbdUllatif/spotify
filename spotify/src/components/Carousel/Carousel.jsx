@@ -26,7 +26,11 @@ export default function Carousel({ title, data }) {
 
   let playLists = data.playlists?.map((playlistData) => {
     return (
-      <PlayList data={playlistData} key={playlistData.playlist_id}></PlayList>
+      <PlayList
+        data={playlistData}
+        key={playlistData.playlist_id}
+        id={playlistData.playlist_id}
+      ></PlayList>
     );
   });
 

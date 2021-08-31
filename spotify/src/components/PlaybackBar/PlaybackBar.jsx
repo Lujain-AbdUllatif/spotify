@@ -5,6 +5,7 @@ import "./playbackBar.css";
 
 // Components
 import ProgressBar from "../ProgressBar/ProgressBar";
+import SoundTrack from "../SoundTrack/SoundTrack";
 
 // Context
 import AppContext from "../../contextCustomHooks";
@@ -41,22 +42,21 @@ export default function PlayBackBar() {
 
   //   handles
   const handlePlayClick = () => {
-    if (songName_Context.songName) {
-      // song streaming
-      if (play_Context.play.state) {
-        if (songAudioElement_Context.songAudioElement)
-          songAudioElement_Context.songAudioElement.pause();
+    // if (songName_Context.songName) {
+    //   // song streaming
+    //   if (play_Context.play.state) {
+    //     if (songAudioElement_Context.songAudioElement)
+    //       songAudioElement_Context.songAudioElement.pause();
 
-        songAudioElement_Context.songAudioElement.play();
-      } else {
-        songAudioElement_Context.songAudioElement.pause();
-      }
-      // play-pause btn
-      play_Context.setPlay({
-        ...play_Context.play,
-        state: !play_Context.play.state,
-      });
-    }
+    //     songAudioElement_Context.songAudioElement.play();
+    //   } else {
+    //     songAudioElement_Context.songAudioElement.pause();
+    //   }
+    // play-pause btn
+    play_Context.setPlay({
+      ...play_Context.play,
+      state: !play_Context.play.state,
+    });
   };
 
   const handlePrevClick = () => {
@@ -149,6 +149,9 @@ export default function PlayBackBar() {
           defaultValue={100}
         />
       </div>
+
+      {/* SOUND */}
+      {play_Context.play.song_id ? <SoundTrack /> : ""}
     </div>
   );
 }

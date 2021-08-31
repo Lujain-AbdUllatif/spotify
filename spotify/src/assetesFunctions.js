@@ -14,3 +14,14 @@ export const sec2min = (num) => {
       : (num % 60000).toString().slice(0, 2));
   return str;
 };
+
+// Building the playlist-IdI object
+export const buildPlaylistIdI = (tracks) => {
+  let obj = {};
+
+  tracks.map((track, i) => {
+    obj[track.track_id] = i;
+  });
+
+  return obj;
+};

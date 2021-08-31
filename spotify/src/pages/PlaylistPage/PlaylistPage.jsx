@@ -9,9 +9,6 @@ import PlaylistHeader from "../../components/PlaylistHeader/PlaylistHeader";
 import PlaylistTableFilter from "../../components/PlaylistTableFilter/PlaylistTableFilter";
 import Table from "../../components/Table/Table";
 
-// Context
-import AppContext from "../../contextCustomHooks";
-
 // CSS
 import "./playlistPage.css";
 
@@ -21,20 +18,20 @@ export default function PlaylistPage() {
   let [tracksNum, setTracksNum] = React.useState();
   let [tracks, setTracks] = React.useState();
   let [txtValue, setTxtValue] = React.useState();
+  let [playlistData, setPlaylistData] = React.useState();
 
   let history = useHistory();
 
-  // Context Hooks
-  const { playlistImg_Context } = AppContext();
-
   useEffect(() => {
-    playlistImg_Context.setPlaylistImg(history.location.state.data.image_url);
+    let playlistData = history.location.state.data;
+
     // Fetching playlist data
-    playlistSongs(history.location.state.data.playlist_id).then((data) => {
+    playlistSongs(playlistData.playlist_id).then((data) => {
       // Setting States for the table
+      setPlaylistData({ ...data, image_url: playlistData.image_url });
+      setTracks(data.tracks);
       setDuration(data.playlist_duration);
       setTracksNum(data.playlist_tracks);
-      setTracks(data.tracks);
     });
   }, []);
 
@@ -54,7 +51,12 @@ export default function PlaylistPage() {
         <PlaylistTableFilter fun={setTxtValue}></PlaylistTableFilter>
         {/* TABLE */}
         {tracks ? (
-          <Table data={tracks} headers={headers} filterTxt={txtValue}></Table>
+          <Table
+            data={tracks}
+            headers={headers}
+            filterTxt={txtValue}
+            playlistData={playlistData}
+          ></Table>
         ) : (
           ""
         )}
