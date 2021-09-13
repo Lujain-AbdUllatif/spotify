@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // CSS
 import "./playbackBar.css";
@@ -22,7 +22,7 @@ const nextIcon = <i className="fas fa-step-forward"></i>;
 
 export default function PlayBackBar() {
   // States
-  const [progress, setProgress] = React.useState(0);
+  const [btnDisable, setBtnDisable] = React.useState(true);
 
   // Context Hooks
   const {
@@ -31,28 +31,14 @@ export default function PlayBackBar() {
     playlistImg_Context,
     play_Context,
     songAudioElement_Context,
-    songDuration_Context,
+    progressBar_Context,
     nextSong_Context,
     prevSong_Context,
     volume_Context,
   } = AppContext();
 
-  // TOTAL
-  const total = songDuration_Context.songDuration;
-
   //   handles
   const handlePlayClick = () => {
-    // if (songName_Context.songName) {
-    //   // song streaming
-    //   if (play_Context.play.state) {
-    //     if (songAudioElement_Context.songAudioElement)
-    //       songAudioElement_Context.songAudioElement.pause();
-
-    //     songAudioElement_Context.songAudioElement.play();
-    //   } else {
-    //     songAudioElement_Context.songAudioElement.pause();
-    //   }
-    // play-pause btn
     play_Context.setPlay({
       ...play_Context.play,
       state: !play_Context.play.state,
@@ -60,28 +46,17 @@ export default function PlayBackBar() {
   };
 
   const handlePrevClick = () => {
-    if (prevSong_Context.prevSong?.id) {
-      let prevSongBtn = document.getElementById(
-        `${prevSong_Context.prevSong.id}`
-      );
-      prevSongBtn.click();
-    }
+    prevSong_Context.setPrevSong(true);
   };
 
   const handleNextClick = () => {
-    if (nextSong_Context.nextSong?.id) {
-      let nextSongBtn = document.getElementById(
-        `${nextSong_Context.nextSong.id}`
-      );
-      nextSongBtn.click();
-    }
+    nextSong_Context.setNextSong(true);
   };
 
   const handleVolChange = (e) => {
-    if (songAudioElement_Context.songAudioElement) {
-      songAudioElement_Context.songAudioElement.volume = e.target.value / 100;
-      volume_Context.setVolume(e.target.value);
-    }
+    console.log("########## HERE ##########");
+    // songAudioElement_Context.songAudioElement.volume = e.target.value / 100;
+    volume_Context.setVolume(e.target.value);
   };
 
   return (
@@ -109,8 +84,12 @@ export default function PlayBackBar() {
           {/* PREVIOUS SONG */}
           <button
             onClick={handlePrevClick}
-            disabled={!prevSong_Context.prevSong}
-            style={prevSong_Context.prevSong?.id ? {} : { color: "#c4c4c4" }}
+            disabled={btnDisable == true || btnDisable == "prev"}
+            style={
+              btnDisable == true || btnDisable == "prev"
+                ? { color: "#c4c4c4" }
+                : {}
+            }
           >
             {prevIcon}
           </button>
@@ -121,21 +100,29 @@ export default function PlayBackBar() {
           {/* NEXT SONG */}
           <button
             onClick={handleNextClick}
-            disabled={!nextSong_Context.nextSong}
-            style={nextSong_Context.nextSong?.id ? {} : { color: "#c4c4c4" }}
+            disabled={btnDisable == true || btnDisable == "next"}
+            style={
+              btnDisable == true || btnDisable == "next"
+                ? { color: "#c4c4c4" }
+                : {}
+            }
           >
             {nextIcon}
           </button>
         </div>
         {/* PROGRESS BAR */}
         <div className="playback-bar-center-progress-bar">
-          <p>{progress ? sec2min(progress) : "--:--"}</p>
-          <ProgressBar
-            total={total}
-            setProgress={setProgress}
-            progress={progress}
-          />
-          <p>{total ? sec2min(total) : "--:--"}</p>
+          <p>
+            {progressBar_Context.progressBar?.position
+              ? sec2min(progressBar_Context.progressBar.position)
+              : "--:--"}
+          </p>
+          <ProgressBar />
+          <p>
+            {progressBar_Context.progressBar?.duration
+              ? sec2min(progressBar_Context.progressBar.duration)
+              : "--:--"}
+          </p>
         </div>
       </div>
 
@@ -151,7 +138,11 @@ export default function PlayBackBar() {
       </div>
 
       {/* SOUND */}
-      {play_Context.play.song_id ? <SoundTrack /> : ""}
+      {play_Context.play.song_id ? (
+        <SoundTrack disableFun={setBtnDisable} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

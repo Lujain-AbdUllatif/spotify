@@ -18,8 +18,7 @@ export const AlbumNameContext = React.createContext();
 export const PlaylistImgContext = React.createContext();
 export const PlayContext = React.createContext();
 export const SongAudioElementContext = React.createContext();
-export const SongDurationContext = React.createContext();
-export const SongChangedContext = React.createContext();
+export const ProgressBarContext = React.createContext();
 export const NextSongContext = React.createContext();
 export const PrevSongContext = React.createContext();
 export const VolumeContext = React.createContext();
@@ -36,8 +35,8 @@ function App() {
     nowPlayingPlaylist: null,
   });
   const [songAudioElement, setSongAudioElement] = React.useState();
-  const [songDuration, setSongDuration] = React.useState();
-  const [songChanged, setSongChanged] = React.useState(false);
+  const [progressBar, setProgressBar] = React.useState();
+
   const [nextSong, setNextSong] = React.useState();
   const [prevSong, setPrevSong] = React.useState();
   const [volume, setVolume] = React.useState();
@@ -59,46 +58,42 @@ function App() {
                 <SongAudioElementContext.Provider
                   value={{ songAudioElement, setSongAudioElement }}
                 >
-                  <SongDurationContext.Provider
-                    value={{ songDuration, setSongDuration }}
+                  <ProgressBarContext.Provider
+                    value={{ progressBar, setProgressBar }}
                   >
-                    <SongChangedContext.Provider
-                      value={{ songChanged, setSongChanged }}
+                    <NextSongContext.Provider
+                      value={{
+                        nextSong,
+                        setNextSong,
+                      }}
                     >
-                      <NextSongContext.Provider
+                      <PrevSongContext.Provider
                         value={{
-                          nextSong,
-                          setNextSong,
+                          prevSong,
+                          setPrevSong,
                         }}
                       >
-                        <PrevSongContext.Provider
+                        <VolumeContext.Provider
                           value={{
-                            prevSong,
-                            setPrevSong,
+                            volume,
+                            setVolume,
                           }}
                         >
-                          <VolumeContext.Provider
-                            value={{
-                              volume,
-                              setVolume,
-                            }}
+                          <PlaylistTracks.Provider
+                            value={{ playlistTracks, setPlaylistTracks }}
                           >
-                            <PlaylistTracks.Provider
-                              value={{ playlistTracks, setPlaylistTracks }}
+                            <PlaylistIdI.Provider
+                              value={{ playlistIdI, setPlaylistIdI }}
                             >
-                              <PlaylistIdI.Provider
-                                value={{ playlistIdI, setPlaylistIdI }}
-                              >
-                                {/**********/}
-                                <PlaybackBar />
-                                {/**********/}
-                              </PlaylistIdI.Provider>
-                            </PlaylistTracks.Provider>
-                          </VolumeContext.Provider>
-                        </PrevSongContext.Provider>
-                      </NextSongContext.Provider>
-                    </SongChangedContext.Provider>
-                  </SongDurationContext.Provider>
+                              {/**********/}
+                              <PlaybackBar />
+                              {/**********/}
+                            </PlaylistIdI.Provider>
+                          </PlaylistTracks.Provider>
+                        </VolumeContext.Provider>
+                      </PrevSongContext.Provider>
+                    </NextSongContext.Provider>
+                  </ProgressBarContext.Provider>
                 </SongAudioElementContext.Provider>
               </PlayContext.Provider>
             </PlaylistImgContext.Provider>
@@ -152,46 +147,42 @@ function App() {
                     <SongAudioElementContext.Provider
                       value={{ songAudioElement, setSongAudioElement }}
                     >
-                      <SongDurationContext.Provider
-                        value={{ songDuration, setSongDuration }}
+                      <ProgressBarContext.Provider
+                        value={{ progressBar, setProgressBar }}
                       >
-                        <SongChangedContext.Provider
-                          value={{ songChanged, setSongChanged }}
+                        <NextSongContext.Provider
+                          value={{
+                            nextSong,
+                            setNextSong,
+                          }}
                         >
-                          <NextSongContext.Provider
+                          <PrevSongContext.Provider
                             value={{
-                              nextSong,
-                              setNextSong,
+                              prevSong,
+                              setPrevSong,
                             }}
                           >
-                            <PrevSongContext.Provider
+                            <VolumeContext.Provider
                               value={{
-                                prevSong,
-                                setPrevSong,
+                                volume,
+                                setVolume,
                               }}
                             >
-                              <VolumeContext.Provider
-                                value={{
-                                  volume,
-                                  setVolume,
-                                }}
+                              <PlaylistTracks.Provider
+                                value={{ playlistTracks, setPlaylistTracks }}
                               >
-                                <PlaylistTracks.Provider
-                                  value={{ playlistTracks, setPlaylistTracks }}
+                                <PlaylistIdI.Provider
+                                  value={{ playlistIdI, setPlaylistIdI }}
                                 >
-                                  <PlaylistIdI.Provider
-                                    value={{ playlistIdI, setPlaylistIdI }}
-                                  >
-                                    {/**********/}
-                                    <PlaylistPage />
-                                    {/**********/}
-                                  </PlaylistIdI.Provider>
-                                </PlaylistTracks.Provider>
-                              </VolumeContext.Provider>
-                            </PrevSongContext.Provider>
-                          </NextSongContext.Provider>
-                        </SongChangedContext.Provider>
-                      </SongDurationContext.Provider>
+                                  {/**********/}
+                                  <PlaylistPage />
+                                  {/**********/}
+                                </PlaylistIdI.Provider>
+                              </PlaylistTracks.Provider>
+                            </VolumeContext.Provider>
+                          </PrevSongContext.Provider>
+                        </NextSongContext.Provider>
+                      </ProgressBarContext.Provider>
                     </SongAudioElementContext.Provider>
                   </PlayContext.Provider>
                 </PlaylistImgContext.Provider>

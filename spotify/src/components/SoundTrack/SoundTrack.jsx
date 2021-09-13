@@ -10,101 +10,92 @@ import AppContext from "../../contextCustomHooks";
 // CSS
 import "./soundTrack.css";
 
-export default function SoundPBB() {
-  const [url, setUrl] = React.useState();
+export default function SoundTrack({ disableFun }) {
   const [num, setNum] = React.useState(0);
-  const [songChanged, setSongChanged] = React.useState(false);
 
   // Contexts
   const {
     playlistTracks_Context,
     play_Context,
     playlistIdI_Context,
+    progressBar_Context,
+    nextSong_Context,
+    prevSong_Context,
+    volume_Context,
   } = AppContext();
 
-  // const playState = play_Context.play.state;
-
   useEffect(() => {
-    let song_id = play_Context.play.song_id;
-    if (song_id) {
-      setUrl(songAudio(song_id));
-      // setting the song's place
-      let index = playlistIdI_Context.playlistIdI[song_id];
-      setNum(index);
+    if (nextSong_Context.nextSong) {
+      playNextSong();
+      nextSong_Context.setNextSong(false);
     }
 
-    // if the song is changed then set the url and the num
-    if (songChanged) {
-      let song_id = play_Context.play.song_id;
-      console.log("<<<<<<<<<< CUR SONG ID >>>>>>>>>>", song_id);
-
-      let song_index = playlistIdI_Context.playlistIdI[song_id];
-      console.log("<<<<<<<<<< CUR SONG INDEX >>>>>>>>>>", song_index);
-
-      // let new_song_obj =
-      //   playlistTracks_Context.playlistTracks.tracks[song_index + 1];
-      // console.log("<<<<<<<<<< NEXT SONG OBJECT >>>>>>>>>>", new_song_obj);
-
-      // let new_song_id = new_song_obj.track_id;
-      // console.log("<<<<<<<<<< NEXT SONG ID >>>>>>>>>>", new_song_id);
-
-      setUrl(songAudio(song_id));
-      setNum((prev) => {
-        return prev + 1;
-      });
-
-      setSongChanged(false);
+    if (prevSong_Context.prevSong) {
+      playPrevSong();
+      prevSong_Context.setPrevSong(false);
     }
-  }, [
-    playlistTracks_Context.playlistTracks,
-    num,
-    playlistIdI_Context.playlistIdI,
-    songChanged,
-  ]);
+    // setting the number
+    let cur_song_id = play_Context.play.song_id;
+    let cur_song_index = playlistIdI_Context.playlistIdI[cur_song_id];
+    console.log(cur_song_index);
+    setNum(cur_song_index);
+    if (cur_song_index === 0) disableFun("prev");
+    else if (
+      cur_song_index ===
+      playlistTracks_Context.playlistTracks.tracks_num - 1
+    )
+      disableFun("next");
+    else {
+      disableFun("both");
+    }
+  }, [play_Context.play.song_id, nextSong_Context, prevSong_Context]);
 
-  // console.log(
-  //   "<<<<<<<<<< TRACKS NUM >>>>>>>>>>",
-  //   playlistTracks_Context.playlistTracks?.tracks_num
-  // );
-  // console.log("<<<<<<<<<< NUM >>>>>>>>>>", num);
-
-  const handleFinishPlaying = () => {
-    // current song details
-    let song_id = play_Context.play.song_id;
-    let song_index = playlistIdI_Context.playlistIdI[song_id];
-
-    // next song details and setting
+  const playNextSong = () => {
     if (num < playlistTracks_Context.playlistTracks.tracks_num - 1) {
+      // current song details
+      let song_id = play_Context.play.song_id;
+      let song_index = playlistIdI_Context.playlistIdI[song_id];
+      // next song details and setting
       let new_song_obj =
         playlistTracks_Context.playlistTracks.tracks[song_index + 1];
       let new_song_id = new_song_obj.track_id;
-
-      console.log(
-        "//////////////////////// CUR SONG ID ////////////////////////",
-        song_id
-      );
-      console.log(
-        "//////////////////////// CUR SONG INDEX ////////////////////////",
-        song_index
-      );
-      console.log(
-        "//////////////////////// NEXT SONG OBJECT ////////////////////////",
-        new_song_obj
-      );
-      console.log(
-        "//////////////////////// NEXT SONG ID ////////////////////////",
-        new_song_id
-      );
 
       play_Context.setPlay((prev) => {
         return { ...prev, song_id: new_song_id };
       });
       // setUrl(songAudio(new_song_id));
-      // setNum((prev) => {
-      //   return prev + 1;
-      // });
+      setNum((prev) => {
+        return prev + 1;
+      });
+    }
+  };
 
-      setSongChanged(true);
+  const playPrevSong = () => {
+    if (num > 0) {
+      // current song details
+      let song_id = play_Context.play.song_id;
+      let song_index = playlistIdI_Context.playlistIdI[song_id];
+      // next song details and setting
+      let new_song_obj =
+        playlistTracks_Context.playlistTracks.tracks[song_index - 1];
+      let new_song_id = new_song_obj.track_id;
+
+      play_Context.setPlay((prev) => {
+        return { ...prev, song_id: new_song_id };
+      });
+      // setUrl(songAudio(new_song_id));
+      setNum((prev) => {
+        return prev - 1;
+      });
+    }
+  };
+
+  const handleFinishPlaying = () => {
+    console.log(playlistTracks_Context.playlistTracks.tracks_num);
+    console.log(num);
+
+    if (num < playlistTracks_Context.playlistTracks.tracks_num - 1) {
+      playNextSong();
     } else {
       play_Context.setPlay((prev) => {
         return { state: true };
@@ -112,18 +103,28 @@ export default function SoundPBB() {
     }
   };
 
-  if (!url) {
+  const handleOnPlaying = (obj) => {
+    progressBar_Context.setProgressBar({
+      position: obj.position,
+      duration: obj.duration,
+    });
+  };
+
+  if (
+    (!play_Context.play.song_id && play_Context.play.state) ||
+    play_Context.play.state === undefined
+  )
     return "";
-  }
 
   return (
     <Sound
-      url={url}
+      url={songAudio(play_Context.play.song_id)}
       playStatus={
-        !play_Context.play.state ? Sound.status.PLAYING : Sound.status.PAUSING
+        !play_Context?.play?.state ? Sound.status.PLAYING : Sound.status.PAUSING
       }
-      // playStatus={Sound.status.PAUSING}
       onFinishedPlaying={handleFinishPlaying}
+      onPlaying={handleOnPlaying}
+      volume={volume_Context.volume ? volume_Context.volume : 100}
     />
   );
 }

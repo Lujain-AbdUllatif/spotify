@@ -60,7 +60,7 @@ export default function PlayList({ data }) {
       playlistImg_Context.setPlaylistImg(image_url);
 
       playlistSongs(playlist_id).then((data) => {
-        // console.log("ALL DATA ", data);
+        console.log("ALL DATA ", data);
         // console.log("fetched songs::: ", data.tracks);
 
         playlistTracks_Context.setPlaylistTracks({
