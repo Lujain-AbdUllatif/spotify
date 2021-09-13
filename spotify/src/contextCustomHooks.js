@@ -5,8 +5,7 @@ import {
   PlaylistImgContext,
   PlayContext,
   SongAudioElementContext,
-  SongDurationContext,
-  SongChangedContext,
+  ProgressBarContext,
   NextSongContext,
   PrevSongContext,
   VolumeContext,
@@ -20,8 +19,8 @@ const AppContext = () => {
   const playlistImg_Context = useContext(PlaylistImgContext);
   const play_Context = useContext(PlayContext);
   const songAudioElement_Context = useContext(SongAudioElementContext);
-  const songDuration_Context = useContext(SongDurationContext);
-  const songChanged_Context = useContext(SongChangedContext);
+  const progressBar_Context = useContext(ProgressBarContext);
+
   const nextSong_Context = useContext(NextSongContext);
   const prevSong_Context = useContext(PrevSongContext);
   const volume_Context = useContext(VolumeContext);
@@ -34,8 +33,8 @@ const AppContext = () => {
     playlistImg_Context,
     play_Context,
     songAudioElement_Context,
-    songDuration_Context,
-    songChanged_Context,
+    progressBar_Context,
+
     nextSong_Context,
     prevSong_Context,
     volume_Context,

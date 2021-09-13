@@ -12,18 +12,13 @@ import "./table.css";
 
 export default function Table({ data, headers, filterTxt, playlistData }) {
   // Context Hooks
-  const {
-    songName_Context,
-    albumName_Context,
-    songDuration_Context,
-  } = AppContext();
+  const { songName_Context, albumName_Context } = AppContext();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
-    songDuration_Context.setSongDuration(track.duration);
   };
 
   // Filtering Data

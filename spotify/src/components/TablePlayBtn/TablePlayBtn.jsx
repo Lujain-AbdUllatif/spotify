@@ -28,8 +28,6 @@ export default function TablePlayBtn({
     playlistImg_Context,
     playlistIdI_Context,
     playlistTracks_Context,
-
-    // songDuration_Context,
   } = AppContext();
 
   // create a constant to know if the play song matches the curr
