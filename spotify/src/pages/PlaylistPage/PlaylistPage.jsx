@@ -28,7 +28,11 @@ export default function PlaylistPage() {
     // Fetching playlist data
     playlistSongs(playlistData.playlist_id).then((data) => {
       // Setting States for the table
-      setPlaylistData({ ...data, image_url: playlistData.image_url });
+      setPlaylistData({
+        ...data,
+        image_url: playlistData.image_url,
+        playlist_id: playlistData.playlist_id,
+      });
       setTracks(data.tracks);
       setDuration(data.playlist_duration);
       setTracksNum(data.playlist_tracks);
