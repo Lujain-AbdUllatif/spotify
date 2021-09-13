@@ -21,6 +21,7 @@ export default function SoundTrack({ disableFun }) {
     progressBar_Context,
     nextSong_Context,
     prevSong_Context,
+    volume_Context,
   } = AppContext();
 
   useEffect(() => {
@@ -109,7 +110,11 @@ export default function SoundTrack({ disableFun }) {
     });
   };
 
-  if (!play_Context.play.song_id && play_Context.play.state) return "";
+  if (
+    (!play_Context.play.song_id && play_Context.play.state) ||
+    play_Context.play.state === undefined
+  )
+    return "";
 
   return (
     <Sound
@@ -119,6 +124,7 @@ export default function SoundTrack({ disableFun }) {
       }
       onFinishedPlaying={handleFinishPlaying}
       onPlaying={handleOnPlaying}
+      volume={volume_Context.volume ? volume_Context.volume : 100}
     />
   );
 }

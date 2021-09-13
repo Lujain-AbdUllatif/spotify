@@ -54,10 +54,9 @@ export default function PlayBackBar() {
   };
 
   const handleVolChange = (e) => {
-    if (songAudioElement_Context.songAudioElement) {
-      songAudioElement_Context.songAudioElement.volume = e.target.value / 100;
-      volume_Context.setVolume(e.target.value);
-    }
+    console.log("########## HERE ##########");
+    // songAudioElement_Context.songAudioElement.volume = e.target.value / 100;
+    volume_Context.setVolume(e.target.value);
   };
 
   return (
