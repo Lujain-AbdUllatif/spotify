@@ -140,7 +140,7 @@
 //                 }
 
 //                 if (cell.column.Header == "PLAY-BTN-RIGHT") {
-//                   console.log("yesss");
+//                   ("yesss");
 //                   return (
 //                     <td className="playlist-table-play-btn-data-right"> </td>
 //                   );

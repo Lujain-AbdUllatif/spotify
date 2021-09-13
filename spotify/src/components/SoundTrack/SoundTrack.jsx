@@ -37,7 +37,7 @@ export default function SoundTrack({ disableFun }) {
     // setting the number
     let cur_song_id = play_Context.play.song_id;
     let cur_song_index = playlistIdI_Context.playlistIdI[cur_song_id];
-    console.log(cur_song_index);
+
     setNum(cur_song_index);
     if (cur_song_index === 0) disableFun("prev");
     else if (
@@ -91,9 +91,6 @@ export default function SoundTrack({ disableFun }) {
   };
 
   const handleFinishPlaying = () => {
-    console.log(playlistTracks_Context.playlistTracks.tracks_num);
-    console.log(num);
-
     if (num < playlistTracks_Context.playlistTracks.tracks_num - 1) {
       playNextSong();
     } else {
