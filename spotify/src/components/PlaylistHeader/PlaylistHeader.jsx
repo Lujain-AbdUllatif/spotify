@@ -2,7 +2,7 @@ import React from "react";
 
 import "./playlistHeader.css";
 
-export default function PlaylistHeader({ data, duration, tracksNum }) {
+export default function PlaylistHeader({ data, duration, tracksNum, genre }) {
   const { name, description, image_url } = data;
 
   return (
@@ -16,11 +16,13 @@ export default function PlaylistHeader({ data, duration, tracksNum }) {
       }}
     >
       <div className="playlist-page-title-description">
-        <h3>{name}</h3>
+        <h3 style={genre ? { marginBottom: "30px" } : {}}>{name}</h3>
         <p>{description}</p>
       </div>
       <div className="playlist-page-length-duration">
-        <h3>{tracksNum} songs</h3>
+        <h3 style={genre ? { marginBottom: "30px" } : {}}>
+          {tracksNum} {genre ? "playlists" : "songs"}
+        </h3>
         <p>{duration}</p>
       </div>
     </div>

@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Browse from "./pages/Browse/Browse";
 import LikedSongs from "./pages/LikedSongs/LikedSongs";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
+import GenrePage from "./pages/GenrePage/GenrePage";
 
 // CSS
 import "./App.css";
@@ -188,6 +189,10 @@ function App() {
                 </PlaylistImgContext.Provider>
               </AlbumNameContext.Provider>
             </SongNameContext.Provider>
+          </Route>
+
+          <Route path="/genre">
+            <GenrePage />
           </Route>
         </Switch>
       </Router>

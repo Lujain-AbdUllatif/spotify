@@ -1,10 +1,24 @@
-.browse-container {
-  height: 100vh;
+/* .browse-container {
   background-color: rgba(29, 185, 84, 0.15);
-  margin-bottom: 100px;
-}
+} */
 
 .browse-div {
+  background-color: rgba(29, 185, 84, 0.15);
+  height: 100vh;
   margin-left: 270px;
   padding: 50px;
+}
+
+.browse-title {
+  font-size: 30px;
+}
+
+.browse-genres {
+  display: flex;
+  flex-direction: column;
+}
+
+.browse-genres-group {
+  display: flex;
+  /* flex-direction: column; */
 }

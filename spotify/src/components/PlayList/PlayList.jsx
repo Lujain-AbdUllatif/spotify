@@ -1,10 +1,8 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import Sound from "react-sound";
 
 // API
 import playlistSongs from "../../API/playlistAPI";
-import songAudio from "../../API/songAudio";
 
 // Context
 import AppContext from "../../contextCustomHooks";
@@ -22,6 +20,8 @@ import "./playList.css";
 export default function PlayList({ data }) {
   let { image_url, name, description, playlist_id } = data;
 
+  console.log("DATA ARRIVED ", data);
+
   // Context Hooks
   const {
     albumName_Context,
@@ -29,7 +29,6 @@ export default function PlayList({ data }) {
     songName_Context,
     playlistTracks_Context,
     playlistIdI_Context,
-    songAudioElement_Context,
     play_Context,
   } = AppContext();
 
@@ -37,14 +36,10 @@ export default function PlayList({ data }) {
 
   let curPlaylist =
     !play_Context.play.state &&
-    parseInt(play_Context.play.nowPlayingPlaylist) == playlist_id;
+    parseInt(play_Context.play.nowPlayingPlaylist) === playlist_id;
 
   const handleClick = () => {
     history.push("/playlist", { data });
-
-    // play_Context.setPlay((prev) => {
-    //   return { ...prev, nowPlayingPlaylist: playlist_id };
-    // });
   };
 
   const handleBtnClick = (e) => {
@@ -101,6 +96,7 @@ export default function PlayList({ data }) {
               `${curPlaylist ? "playlist-play-pause-img-visible" : ""}`
             }
             src={!curPlaylist ? playImg : pauseImg}
+            alt="play-pause-btn"
           />
         </button>
       </div>

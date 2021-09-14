@@ -13,9 +13,6 @@ import { buildPlaylistIdI } from "../../assetesFunctions";
 // CSS
 import "./tablePlayBtn.css";
 
-// Sound
-import Sound from "react-sound";
-
 export default function TablePlayBtn({
   track,
   playBtnClicked,
