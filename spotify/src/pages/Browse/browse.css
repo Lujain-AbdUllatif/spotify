@@ -1,10 +1,7 @@
-/* .browse-container {
-  background-color: rgba(29, 185, 84, 0.15);
-} */
-
 .browse-div {
   background-color: rgba(29, 185, 84, 0.15);
-  height: 100vh;
+  min-height: 100vh;
+  min-width: fit-content;
   margin-left: 270px;
   padding: 50px;
 }
@@ -20,5 +17,4 @@
 
 .browse-genres-group {
   display: flex;
-  /* flex-direction: column; */
 }

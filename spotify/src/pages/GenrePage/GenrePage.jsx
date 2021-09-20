@@ -13,6 +13,7 @@ import "./genrePage.css";
 
 export default function GenrePage() {
   const [genrePlaylists, setGenrePlaylists] = React.useState();
+  const [playlistsNum, setPlaylistsNum] = React.useState();
 
   //   data in history
   const history = useHistory();
@@ -20,13 +21,19 @@ export default function GenrePage() {
   const headerData = { image_url: imgSrc, name: title };
 
   useEffect(() => {
-    genrePlaylistsAPI(id).then((data) => {
-      //   console.log("####### GENRE DATA #######", data.playlists);
-      setGenrePlaylists();
-      data.playlists.map((playlist) => {
-        return <PlayList data={playlist} />;
+    genrePlaylistsAPI(id)
+      .then((data) => {
+        console.log("####### GENRE DATA #######", data.playlists);
+        let playlistsArr = data.playlists.map((playlist) => {
+          return <PlayList data={playlist} />;
+        });
+        setGenrePlaylists(playlistsArr);
+        setPlaylistsNum(playlistsArr.length);
+      })
+      .catch((err) => {
+        console.log(err);
+        return "Something went wrong";
       });
-    });
   }, []);
 
   return (
@@ -34,10 +41,11 @@ export default function GenrePage() {
       <PlaylistHeader
         genre={true}
         data={headerData}
-        //   duration={} tracksNum={}
+        tracksNum={playlistsNum ? playlistsNum : ""}
       />
-      <h1>WELCOME TO THE GENRE PAGE !!!!!!!!!!!!!</h1>
-      <div>{genrePlaylists ? genrePlaylists : "NOTH"}</div>
+      <div className="genre-page-grid">
+        {genrePlaylists ? genrePlaylists : ""}
+      </div>
     </div>
   );
 }

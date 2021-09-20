@@ -192,7 +192,33 @@ function App() {
           </Route>
 
           <Route path="/genre">
-            <GenrePage />
+            <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
+              <PlaylistImgContext.Provider
+                value={{ playlistImg, setPlaylistImg }}
+              >
+                <SongNameContext.Provider value={{ songName, setSongName }}>
+                  <PlaylistTracks.Provider
+                    value={{ playlistTracks, setPlaylistTracks }}
+                  >
+                    <SongAudioElementContext.Provider
+                      value={{ songAudioElement, setSongAudioElement }}
+                    >
+                      <PlayContext.Provider value={{ play, setPlay }}>
+                        <PlayContext.Provider value={{ play, setPlay }}>
+                          <PlaylistIdI.Provider
+                            value={{ playlistIdI, setPlaylistIdI }}
+                          >
+                            {/**********/}
+                            <GenrePage />
+                            {/**********/}
+                          </PlaylistIdI.Provider>
+                        </PlayContext.Provider>
+                      </PlayContext.Provider>
+                    </SongAudioElementContext.Provider>
+                  </PlaylistTracks.Provider>
+                </SongNameContext.Provider>
+              </PlaylistImgContext.Provider>
+            </AlbumNameContext.Provider>
           </Route>
         </Switch>
       </Router>
