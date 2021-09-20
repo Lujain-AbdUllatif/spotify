@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useHistory } from "react-router-dom";
 
 // Components
 import LikeBtn from "../LikeBtn/LikeBtn";
@@ -7,15 +8,27 @@ import TablePlayBtn from "../TablePlayBtn/TablePlayBtn";
 // Context
 import AppContext from "../../contextCustomHooks";
 
+// liked songs image
+import likedSongsImg from "../../assets/liked_songs.jpg";
+
 // CSS
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt, playlistData }) {
   // Context Hooks
-  const { songName_Context, albumName_Context } = AppContext();
+  const {
+    songName_Context,
+    albumName_Context,
+    playlistImg_Context,
+  } = AppContext();
+
+  // history
+  const history = useHistory();
 
   // playBtnClicked
   const playBtnClicked = (track, e) => {
+    if (history.location.pathname === "/liked-songs")
+      playlistImg_Context.setPlaylistImg(likedSongsImg);
     // setting the current song details
     songName_Context.setSongName(track.name);
     albumName_Context.setAlbumName(track.album_name);
@@ -75,7 +88,7 @@ export default function Table({ data, headers, filterTxt, playlistData }) {
                 />
               </td>
               <td className="table-data table-data-like-btn">
-                <LikeBtn value={Boolean(Math.round(Math.random()))} />
+                <LikeBtn value={track.is_liked} id={track.track_id} />
               </td>
               <td className="table-data" id="song-name">
                 {track.name}

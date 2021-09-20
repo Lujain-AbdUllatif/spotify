@@ -136,7 +136,56 @@ function App() {
             <Browse />
           </Route>
           <Route path="/liked-songs">
-            <LikedSongs />
+            <SongNameContext.Provider value={{ songName, setSongName }}>
+              <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
+                <PlaylistImgContext.Provider
+                  value={{ playlistImg, setPlaylistImg }}
+                >
+                  <PlayContext.Provider value={{ play, setPlay }}>
+                    <SongAudioElementContext.Provider
+                      value={{ songAudioElement, setSongAudioElement }}
+                    >
+                      <ProgressBarContext.Provider
+                        value={{ progressBar, setProgressBar }}
+                      >
+                        <NextSongContext.Provider
+                          value={{
+                            nextSong,
+                            setNextSong,
+                          }}
+                        >
+                          <PrevSongContext.Provider
+                            value={{
+                              prevSong,
+                              setPrevSong,
+                            }}
+                          >
+                            <VolumeContext.Provider
+                              value={{
+                                volume,
+                                setVolume,
+                              }}
+                            >
+                              <PlaylistTracks.Provider
+                                value={{ playlistTracks, setPlaylistTracks }}
+                              >
+                                <PlaylistIdI.Provider
+                                  value={{ playlistIdI, setPlaylistIdI }}
+                                >
+                                  {/**********/}
+                                  <LikedSongs />
+                                  {/**********/}
+                                </PlaylistIdI.Provider>
+                              </PlaylistTracks.Provider>
+                            </VolumeContext.Provider>
+                          </PrevSongContext.Provider>
+                        </NextSongContext.Provider>
+                      </ProgressBarContext.Provider>
+                    </SongAudioElementContext.Provider>
+                  </PlayContext.Provider>
+                </PlaylistImgContext.Provider>
+              </AlbumNameContext.Provider>
+            </SongNameContext.Provider>
           </Route>
           <Route path="/playlist">
             <SongNameContext.Provider value={{ songName, setSongName }}>
