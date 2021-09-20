@@ -117,7 +117,9 @@ export default function SoundTrack({ disableFun }) {
     <Sound
       url={songAudio(play_Context.play.song_id)}
       playStatus={
-        !play_Context?.play?.state ? Sound.status.PLAYING : Sound.status.PAUSING
+        !play_Context?.play?.state
+          ? Sound?.status?.PLAYING
+          : Sound?.status?.PAUSING
       }
       onFinishedPlaying={handleFinishPlaying}
       onPlaying={handleOnPlaying}

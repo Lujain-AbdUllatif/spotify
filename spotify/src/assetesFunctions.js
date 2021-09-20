@@ -22,6 +22,7 @@ export const buildPlaylistIdI = (tracks) => {
 
   tracks.map((track, i) => {
     obj[track.track_id] = i;
+    return;
   });
 
   return obj;

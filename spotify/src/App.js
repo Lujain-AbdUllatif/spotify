@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Browse from "./pages/Browse/Browse";
 import LikedSongs from "./pages/LikedSongs/LikedSongs";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
+import GenrePage from "./pages/GenrePage/GenrePage";
 
 // CSS
 import "./App.css";
@@ -188,6 +189,36 @@ function App() {
                 </PlaylistImgContext.Provider>
               </AlbumNameContext.Provider>
             </SongNameContext.Provider>
+          </Route>
+
+          <Route path="/genre">
+            <AlbumNameContext.Provider value={{ albumName, setAlbumName }}>
+              <PlaylistImgContext.Provider
+                value={{ playlistImg, setPlaylistImg }}
+              >
+                <SongNameContext.Provider value={{ songName, setSongName }}>
+                  <PlaylistTracks.Provider
+                    value={{ playlistTracks, setPlaylistTracks }}
+                  >
+                    <SongAudioElementContext.Provider
+                      value={{ songAudioElement, setSongAudioElement }}
+                    >
+                      <PlayContext.Provider value={{ play, setPlay }}>
+                        <PlayContext.Provider value={{ play, setPlay }}>
+                          <PlaylistIdI.Provider
+                            value={{ playlistIdI, setPlaylistIdI }}
+                          >
+                            {/**********/}
+                            <GenrePage />
+                            {/**********/}
+                          </PlaylistIdI.Provider>
+                        </PlayContext.Provider>
+                      </PlayContext.Provider>
+                    </SongAudioElementContext.Provider>
+                  </PlaylistTracks.Provider>
+                </SongNameContext.Provider>
+              </PlaylistImgContext.Provider>
+            </AlbumNameContext.Provider>
           </Route>
         </Switch>
       </Router>

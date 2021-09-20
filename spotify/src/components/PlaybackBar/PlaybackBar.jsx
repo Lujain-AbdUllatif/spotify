@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 // CSS
 import "./playbackBar.css";
@@ -30,7 +30,6 @@ export default function PlayBackBar() {
     albumName_Context,
     playlistImg_Context,
     play_Context,
-    songAudioElement_Context,
     progressBar_Context,
     nextSong_Context,
     prevSong_Context,
@@ -82,9 +81,9 @@ export default function PlayBackBar() {
           {/* PREVIOUS SONG */}
           <button
             onClick={handlePrevClick}
-            disabled={btnDisable == true || btnDisable == "prev"}
+            disabled={btnDisable === true || btnDisable === "prev"}
             style={
-              btnDisable == true || btnDisable == "prev"
+              btnDisable === true || btnDisable === "prev"
                 ? { color: "#c4c4c4" }
                 : {}
             }
@@ -98,9 +97,9 @@ export default function PlayBackBar() {
           {/* NEXT SONG */}
           <button
             onClick={handleNextClick}
-            disabled={btnDisable == true || btnDisable == "next"}
+            disabled={btnDisable === true || btnDisable === "next"}
             style={
-              btnDisable == true || btnDisable == "next"
+              btnDisable === true || btnDisable === "next"
                 ? { color: "#c4c4c4" }
                 : {}
             }
