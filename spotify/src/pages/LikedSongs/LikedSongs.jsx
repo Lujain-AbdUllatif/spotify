@@ -20,19 +20,23 @@ import "./likedSongs.css";
 export default function LikedSongs() {
   // States
   const [data, setData] = React.useState();
-
-  const { playlistImg_Context } = AppContext();
-
-  const headerData = { name: "Liked Songs", image_url: likedSongsImg };
-  useEffect(() => {
-    likedSongs().then((data) => {
-      playlistImg_Context.setPlaylistImg(likedSongsImg);
-      setData(data.liked_tracks);
-    });
-  }, []);
+  const [playlistData, setPlaylistData] = React.useState();
 
   // Table headers
+  const headerData = { name: "Liked Songs", image_url: likedSongsImg };
   const headers = ["", "TITLE", "ARTIST", "ALBUM", "REALEASE DATE"];
+
+  useEffect(() => {
+    likedSongs().then((data) => {
+      setData(data.liked_tracks);
+      setPlaylistData({
+        image_url: likedSongsImg,
+        playlist_id: "likedSongs",
+        playlist_tracks: data.liked_tracks.length,
+        tracks: data.liked_tracks,
+      });
+    });
+  }, []);
 
   return (
     <div className="liked-songs-container">
@@ -45,7 +49,16 @@ export default function LikedSongs() {
         ""
       )}
       <PlaylistTableFilter></PlaylistTableFilter>
-      {data ? <Table headers={headers} data={data}></Table> : ""}
+
+      {data && playlistData ? (
+        <Table
+          headers={headers}
+          data={data}
+          playlistData={playlistData}
+        ></Table>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
