@@ -68,6 +68,11 @@
     width: 200px;
     height: 200px;
   }
+
+  .playlist-img-div-cover {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .playlist-name {
