@@ -15,15 +15,6 @@ import likedSongsImg from "../../assets/liked_songs.jpg";
 import "./table.css";
 
 export default function Table({ data, headers, filterTxt, playlistData }) {
-  console.log(
-    " IN TABLE $$$$$$$$$$$$$$$$$ DATA ##########################",
-    data
-  );
-  console.log(
-    "IN TABLE  IN TABLE $$$$$$$$$$$$$$$$$ PLAYLIST DATA ##########################",
-    playlistData
-  );
-
   // Context Hooks
   const {
     songName_Context,

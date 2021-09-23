@@ -15,7 +15,6 @@ export default function Browse() {
   useEffect(() => {
     genreAPI().then((data) => {
       setGenres(data.categories);
-      // console.log("######## DATA ######## ", data.categories);
     });
   }, []);
 

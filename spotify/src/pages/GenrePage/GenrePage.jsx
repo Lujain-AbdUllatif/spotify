@@ -23,7 +23,6 @@ export default function GenrePage() {
   useEffect(() => {
     genrePlaylistsAPI(id)
       .then((data) => {
-        console.log("####### GENRE DATA #######", data.playlists);
         let playlistsArr = data.playlists.map((playlist) => {
           return <PlayList data={playlist} />;
         });
