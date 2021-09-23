@@ -49,7 +49,6 @@ export default function TablePlayBtn({
     }
     // if neither then update the song (when the song state is updated the useEffect works to play it)
     else {
-      console.log("^^^^^^^^^^^ HERE ^^^^^^^^^^^^^^^^");
       play_Context.setPlay((prev) => {
         return {
           state: false,

@@ -9,7 +9,7 @@ import Table from "../../components/Table/Table";
 import AppContext from "../../contextCustomHooks";
 
 // API
-import likedSongs from "../../API/likedSongs";
+import { likedSongs } from "../../API/likedSongs";
 
 // liked songs image
 import likedSongsImg from "../../assets/liked_songs.jpg";
@@ -21,6 +21,7 @@ export default function LikedSongs() {
   // States
   const [data, setData] = React.useState();
   const [playlistData, setPlaylistData] = React.useState();
+  let [txtValue, setTxtValue] = React.useState();
 
   // Table headers
   const headerData = { name: "Liked Songs", image_url: likedSongsImg };
@@ -38,27 +39,31 @@ export default function LikedSongs() {
     });
   }, []);
 
+  // console.log("BOOOOOOOOOOOOMMMMM", playlistData);
+
+  if (data?.length === 0 || data === undefined) {
+    return (
+      <div className="liked-songs-container">
+        <PlaylistHeader data={headerData} tracksNum={0}></PlaylistHeader>
+      </div>
+    );
+  }
+
   return (
     <div className="liked-songs-container">
-      {data ? (
-        <PlaylistHeader
-          data={headerData}
-          tracksNum={data.length}
-        ></PlaylistHeader>
-      ) : (
-        ""
-      )}
-      <PlaylistTableFilter></PlaylistTableFilter>
+      <PlaylistHeader
+        data={headerData}
+        tracksNum={data.length}
+      ></PlaylistHeader>
 
-      {data && playlistData ? (
-        <Table
-          headers={headers}
-          data={data}
-          playlistData={playlistData}
-        ></Table>
-      ) : (
-        ""
-      )}
+      <PlaylistTableFilter fun={setTxtValue}></PlaylistTableFilter>
+
+      <Table
+        headers={headers}
+        data={data}
+        playlistData={playlistData}
+        filterTxt={txtValue}
+      ></Table>
     </div>
   );
 }
